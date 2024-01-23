@@ -3,21 +3,25 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { MovieCard } from "../movieCard/movieCard";
 import { MovieView } from "../movieView/movieView";
+import { LoginView } from "../LoginView/LoginView";
+import { SignupView } from "../signupView/SignupView";
+//---------------------------------------------------------------------------------------------------------------
 export const MainView = () =>
 {
-    const [movies,setMovies] = useState([
-        /*{id:1,title:'The Thing',director:'john carpenter',released:'1982',imageURL:'--'},
-        {id:2,title:'Invasion of the Body Snatchers',director:'someguy',released:'1978',imageURL:'--'},
-        {id:3,title:'It Follows',director:'willy yanker',released:'2013',imageURL:'--'},
-        {id:4,title:'Night of the Living Dead',director:'george a romero',released:'1968',imageURL:'--'}*/
-    ]);
-
-    
-    const [selectedMovie,setSelectedMovie] = useState(null);
-   
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+  const [user, setUser] = useState(storedUser?storedUser:null);
+  const [token, setToken] = useState(storedToken?storedToken:null);
+  const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+   //------------------------------------------------------------------------------------------------------------
     useEffect(()=>
     {
-        fetch('https://myflixdb-162c62e51cf6.herokuapp.com/movies')
+      if(!token){return;}//if theres no token present yet, exit this function, ei...do not call fetch...
+
+      //if there IS a token present fetch is called...
+        fetch('https://myflixdb-162c62e51cf6.herokuapp.com/movies',
+        {headers:{Authorization: `Bearer ${token}`}})
         .then((response)=>response.json())
         .then((data)=>{
           console.log(data);
@@ -38,13 +42,29 @@ export const MainView = () =>
           setMovies(moviesFromApi);
         });
 
-    },[]);
+    },[token]);
 
+    /*Notice that you’ll need to add token to the second argument of useEffect(). This is known as the dependency array, and it ensures fetch is called every time token changes (for example, after the user logs in). An if statement has also been added to check for token, as there’s no reason to execute the fetch call if there’s no token yet.*/
+//-------------------------------------------------------------------------------------------
+   
+
+
+if (!user) {
+  return (
+    <LoginView
+      onLoggedIn={(user, token) => {
+        setUser(user);
+        setToken(token);
+      }}
+    />
+  );
+}
+//--------------------------------------------------------------------------------------------
     if(selectedMovie)
     {
         return <MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)}/>;
     };
-    
+//-------------------------------------------------------------------------------------------------
 
   return (
     <div>
@@ -57,6 +77,9 @@ export const MainView = () =>
            // alert(movie.title.toString());
         }} />;
       })}
+      <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
     </div>
   );
+  //------------------------------------------------------------------------------
+  
 };

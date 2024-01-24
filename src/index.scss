@@ -1,5 +1,14 @@
+@import '~bootstrap/scss/bootstrap.scss';
 $color: steelblue;
 
 .my-flix {
   color: $color;
+}
+
+.center{
+  width:100%;
+  margin: 0 auto;
+}
+.button{
+  margin-top: 5px;
 }

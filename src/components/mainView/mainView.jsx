@@ -5,6 +5,13 @@ import { MovieCard } from "../movieCard/movieCard";
 import { MovieView } from "../movieView/movieView";
 import { LoginView } from "../LoginView/LoginView";
 import { SignupView } from "../signupView/SignupView";
+import { Col } from "react-bootstrap";
+import {Row} from "react-bootstrap";
+//import {Col} from "react-bootstrap";
+//import "bootstrap/dist/css/bootstrap.min.css";
+//import '../../components/style.css';
+import '../../index.scss';
+
 //---------------------------------------------------------------------------------------------------------------
 export const MainView = () =>
 {
@@ -61,7 +68,7 @@ if (!user) {
   );
 }
 //--------------------------------------------------------------------------------------------
-    if(selectedMovie)
+    if(selectedMovie)//if a movie has been selected, return/show the 'MovieView' component...
     {
         return <MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)}/>;
     };
@@ -69,6 +76,10 @@ if (!user) {
 
   return (
     <div>
+      <Row >
+        <Col></Col>
+        <Col>
+        <h1>My Flix</h1>
       {movies.map((movie) => {
         return <MovieCard
         key = {movie.id} 
@@ -78,7 +89,10 @@ if (!user) {
            // alert(movie.title.toString());
         }} />;
       })}
-      <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
+      <button className="button"  onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
+      </Col>
+      <Col></Col>
+    </Row>
     </div>
   );
   //------------------------------------------------------------------------------

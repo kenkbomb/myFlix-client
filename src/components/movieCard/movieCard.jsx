@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { Col } from "react-bootstrap";
 export const MovieCard = ({movieData,onMovieClick}) =>
 {
-    return <div onClick={()=>{onMovieClick(movieData)}}>{movieData.title}</div>;
+    return <Col onClick={()=>{onMovieClick(movieData)}}>{movieData.title}</Col>;
 };
 
 MovieCard.PropTypes = {
@@ -10,6 +11,7 @@ MovieCard.PropTypes = {
         title:PropTypes.string.isRequired,
         director:PropTypes.string.isRequired,
         genre:PropTypes.string.isRequired,
+        released:PropTypes.string,
         tagline:PropTypes.string,
         description:PropTypes.string,
         

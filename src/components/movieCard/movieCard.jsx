@@ -11,7 +11,7 @@ MovieCard.PropTypes = {
         title:PropTypes.string.isRequired,
         director:PropTypes.string.isRequired,
         genre:PropTypes.string.isRequired,
-        released:PropTypes.string,
+        release:PropTypes.string,
         tagline:PropTypes.string,
         description:PropTypes.string,
         

@@ -38,7 +38,7 @@ export const MainView = () =>
                 _id:movie._id,
                 title:movie.Title,
                 director:movie.Director,
-                released:movie.Released,
+                release:movie.Release,
                 imageURL:movie.ImageURL,
                 genre:movie.Genre,
                 tagline:movie.Tagline,
@@ -54,7 +54,7 @@ export const MainView = () =>
     /*Notice that you’ll need to add token to the second argument of useEffect(). This is known as the dependency array, and it ensures fetch is called every time token changes (for example, after the user logs in). An if statement has also been added to check for token, as there’s no reason to execute the fetch call if there’s no token yet.*/
 //-------------------------------------------------------------------------------------------
    
-
+//below, if no user exists, show the login or signup components...
 
 if (!user) {
   return (
@@ -75,21 +75,25 @@ if (!user) {
 //-------------------------------------------------------------------------------------------------
 
   return (
-    <div>
+    <div style={{border:'2px solid black'}}>
       <Row >
         <Col></Col>
-        <Col>
+        <Col style={{textAlign:'center',border:'1px solid'}}>
         <h1>My Flix</h1>
       {movies.map((movie) => {
-        return <MovieCard
+        return (
+          <div>
+        <MovieCard 
         key = {movie.id} 
         movieData = {movie}
         onMovieClick = {(newSelectedMovie)=>{
             setSelectedMovie(newSelectedMovie);
            // alert(movie.title.toString());
-        }} />;
+        }} />
+        </div>
+        );
       })}
-      <button className="button"  onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
+      <button style={{marginTop:'5px',marginBottom:'5px'}}  onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
       </Col>
       <Col></Col>
     </Row>

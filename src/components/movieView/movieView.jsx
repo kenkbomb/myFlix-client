@@ -4,16 +4,16 @@ import { Col } from "react-bootstrap";
 export const MovieView = ({movieData,onBackClick}) =>
 {
     return (//this is the main movie view component, which displays all of the movies data/info
-    <Col> 
+    <Col style={{textAlign:'center',border:'2px solid'}}> 
         <div>{movieData.imageURL}</div>
         <div>Title: {movieData.title}</div>
         <div> Director: {movieData.director}</div>
-        <div>Released: {movieData.released}</div>
+        <div>Released: {movieData.release}</div>
         <div>Genre: {movieData.genre}</div>
         <div>{movieData.tagline}</div>
         <div>{movieData.description}</div>
         
-        <button onClick={onBackClick} >back</button>
+        <button style={{marginBottom:'5px'}} onClick={onBackClick} >back</button>
     </Col>
     );
 };

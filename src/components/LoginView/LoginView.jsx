@@ -27,7 +27,7 @@ export const LoginView = ({onLoggedIn}) =>
     .then((data)=>
     {
 
-        alert('login response: '+ data.user);
+        alert('Welcome  '+ data.user.Username + '!');
        // alert(data.Username);
         if (data.user) 
             {

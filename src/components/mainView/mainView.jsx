@@ -9,23 +9,35 @@ import { NavigationBar } from "../navigationBar/navigationBar";
 import { ProfileView } from "../profileView/profileView";
 import { HomeView } from "../homeView/HomeView";
 
-import { Col, Container } from "react-bootstrap";
-import {Row} from "react-bootstrap";
+import { Col, Container,Button,Row,Form } from "react-bootstrap";
+//import {Row} from "react-bootstrap";
 import { BrowserRouter,Route,Routes,Navigate } from "react-router-dom";//for routing
 import '../../index.scss';//remove?
 
 
-
+let matches = [];
+let moviesFromApi = [];
+//let moviesBU = [];
+//const [isMatch,setIsMatch] = useState(false);
 //---------------------------------------------------------------------------------------------------------------
 export const MainView = () =>
 {
+  //user and token vars--------------------------------------------
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   const [user, setUser] = useState(storedUser?storedUser:null);
   const [token, setToken] = useState(storedToken?storedToken:null);
+  //movie data hooks-----------------------------------------------
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-
+  //search hooks---------------------------------------------------
+  const [search,setSearch] = useState('');
+  const [match,setMatch] = useState([]);
+  //search button vars---------------------------------------------
+  const [buttonSearch,setButtonSearch] = useState(false);//a toggle bool to help with search logic...
+  const [searchButtonText,setSearchButtonText] = useState('Search');//the text of the search button...
+ 
+  //--------------------------------------------------------------------------------------------------------------
   function doLogout()
   {
     setUser(null); 
@@ -36,8 +48,54 @@ export const MainView = () =>
     console.log("test");
 
   }
+  //---------------------------------------------------------------------------------------------------------------
+  const doSearch =() =>
+  {
+    if(search==='')
+      {
+        setSearchButtonText('Search');
+      }
+      else{setSearchButtonText('Back')}
 
+    setMovies(moviesFromApi);
 
+     matches= movies.filter((m)=>{ return m.genre.toLowerCase().includes(search.toLowerCase())});
+
+    
+   if(search ===''||matches.length===0&&movies.length===moviesFromApi.length)//clean but empty search, no match
+   {
+    alert('no matches found for '+search+ ', please rephrase...');
+    console.log('no matches found! ' + matches.length);
+    console.log(JSON.stringify(moviesFromApi) + ' from moviesFromApi');
+    
+    setSearchButtonText('Search');
+  }
+   if(search!=''&& movies.length===moviesFromApi.length)//first clean search...
+   {
+      console.log('this is the search result: ' + JSON.stringify(matches));
+      console.log(matches.length + ' test match length');
+      console.log(movies);
+      
+      setMatch(JSON.stringify(matches));
+      setMatch(match.map((movie)=>{console.log(movie.title)}));
+      console.log(matches.length);
+      setMovies(moviesFromApi);
+    }
+    if(search!=''&&movies.length<moviesFromApi.length)//dirty search...
+    {
+      alert('back to full list');
+      
+      setSearch('');
+      setSearchButtonText('Search');
+    }
+    if(matches.length!=0&&matches.length!=11)
+    {
+      console.log('reset search jank');
+    }
+    setButtonSearch(!buttonSearch);
+  }
+
+//-----------------------------------------------------------------------------------------------------------
 const deleteUser = () =>
 {
   fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+ user.Username,
@@ -47,44 +105,25 @@ const deleteUser = () =>
   }).then((response)=>
   {
     if(response.ok){
-      alert('user was deleted');
+      alert('user ' + user.Username + " has 'unsubscribed'!");
+      localStorage.clear();
+      setUser(null);
+      <Navigate to={'/'}/>
     }
   }).catch(error =>
     {
       console.log(error)
-    });
-
-
-  //alert('delete button pressed, delete this user');
+    });//alert('delete button pressed, delete this user');
 }
+//-----------------------------------------------------------------------------------------------------------------
 
 
-  const addFavorite = () =>
-  {
-    //const sm = 
+//-----------------------------------------------------------------------------------------------------------------
+ 
+//------------------------------------------------------------------------------------------------------------
 
-      fetch(`https://myflixdb-162c62e51cf6.herokuapp.com/users/${user.Username}/favs/`,
-      {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}`,"Content-Type":"application/json"},
-        body:JSON.stringify({MovieID:selectedMovie._id})
-      }).then((response) => {
-        if (response.ok) {
-          alert('fav added!? check console log ' + selectedMovie._id + ' ' + selectedMovie.title);
-          console.log(user.Favorites);
-          console.log(response);
-          console.log(user);
-            return response.json();
-            
-        } else {
-            alert("Failed to add");
-        }
-    }).catch(error => {
-      console.error('Error: ', error);
-  });
-  }
 
-   //------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
     useEffect(()=>
     {
       if(!token){return;}//if theres no token present yet, exit this function, ei...do not call fetch...
@@ -95,7 +134,8 @@ const deleteUser = () =>
         .then((response)=>response.json())
         .then((data)=>{
           console.log(data);
-          const moviesFromApi = data.map((movie)=>
+          //moviesBU = JSON.stringify(data);
+          moviesFromApi = data.map((movie)=>
           {
               return{
                 _id:movie._id,
@@ -109,18 +149,32 @@ const deleteUser = () =>
                 
               };
           });
+        
+          if(search==='')
+          {
+            console.log('match length is ' + matches.length);
+           
           setMovies(moviesFromApi);
+          }
+          if(search!='' && matches.length!=0)//bug here
+          {
+          
+            console.log('matches found on ' + search+ ' ' + matches.length );
+            setMovies(matches);
+           
+          }
+          
+          
         });
 
-    },[token]);
+    },[token,match,buttonSearch]);//empty dependancy array is the same as using an 'onMount',which means only call/do once...
 
     /*Notice that you’ll need to add token to the second argument of useEffect(). This is known as the dependency array, and it ensures fetch is called every time token changes (for example, after the user logs in). An if statement has also been added to check for token, as there’s no reason to execute the fetch call if there’s no token yet.*/
-//-------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
    
 //below, if no user exists, show the login or signup components...
 
-
-  return (
+return (
     <BrowserRouter>
     <Container>
         <NavigationBar
@@ -131,7 +185,7 @@ const deleteUser = () =>
                     localStorage.removeItem('user');
                 }}
         />
-      <Routes>
+      <Routes >
 {/*-----------------------------------------------------------------------------------------------*/}
         <Route path="/" element = {
           <>
@@ -150,7 +204,7 @@ const deleteUser = () =>
           }
         />
 {/*----------------------------------------------------------------------------------------*/}
-        <Route path = 'logout' element = {
+        <Route path = '/logout' element = {
        <>
        {!user?(<Navigate to ='/login'/>):(
        <LoginView onLoggedIn={(user, token) => {setUser(user);setToken(token);}} />)}
@@ -158,7 +212,7 @@ const deleteUser = () =>
      }></Route>
 
 
-{/*----------------------------------------------------------------------------------------*/}
+{/*------------------------------------------------------------------------------------------------*/}
     <Route path = '/signUp'  element = {
       <>
           {user?(<Navigate to='/'/>):(<SignupView/>)}
@@ -166,32 +220,39 @@ const deleteUser = () =>
     }
   />
 
-{/*------------------------------------------------------------------------------------------*/}
+  {/*------------------------------------------------------------------------------------------*/}
    
 
 
-    {/*------------------------------------------------------------------------------------------*/}
+  {/*------------------------------------------------------------------------------------------*/}
     <Route style={{border:'2px solid black',marginTop:'10vw'}} path = '/profile' element = {
       <>
-        {!user?(<Navigate to = '/login'/>):(<ProfileView  userData={user} moviesData={movies} deleteMe={deleteUser}/>)}
+        {!user?(<Navigate to = '/login'/>):(<ProfileView userData={user} moviesData={movies} deleteMe={deleteUser} token={token} setUser={setUser} />)}
       </>
     }/>
 
-    {/*-------------------------------------------------------------------------------------------*/}
+  {/*-------------------------------------------------------------------------------------------*/}
 
     <Route path = '/movies' element = {
 
       <>
       {!selectedMovie?(
-          <div style={{border:'2px solid black',marginTop:'10vw'}}>
+        
+          <div style={{border:'2px solid #c3ecfa',borderRadius:'10px',marginTop:'5vw',backgroundColor:'cornflowerblue'}}>
+           
           <Row >
             <Col></Col>
-            <Col style={{textAlign:'center',border:'1px solid'}}>
+            <Col style={{textAlign:'center',border:'1px solid #c3ecfa',backgroundColor:'whitesmoke'}}>
+        <Form.Group controlId="search">
+        <Form.Control className="searchInput" type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
+        </Form.Group>
+        <Button className="button" type = 'submit' onClick={doSearch}>{searchButtonText}</Button>
+
             <h1>MyMOVIES</h1>
           {movies.map((movie) => {
             return (
               <div>
-            <MovieCard 
+            <MovieCard className='card'
             key = {movie.id} 
             movieData = {movie}
             onMovieClick = {(newSelectedMovie)=>{
@@ -202,11 +263,11 @@ const deleteUser = () =>
             </div>
             );
           })}
-          <button style={{marginTop:'5px',marginBottom:'5px'}}  onClick={() => { { doLogout/*setUser(null); setToken(null); localStorage.clear(); */}}}>Logout</button>
+          
           </Col>
           <Col></Col>
         </Row>
-        </div>): (<MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)} addFav={addFavorite} />)
+        </div>): (<MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)} user={user} token={token} />)
     }
     
     </>

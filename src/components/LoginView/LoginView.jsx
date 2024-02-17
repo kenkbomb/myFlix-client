@@ -47,7 +47,7 @@ export const LoginView = ({onLoggedIn}) =>
 //---------------------------------------------------------------------------------------------------
     return (
 
-        <Form onSubmit={handleSubmit}>
+        <Form style={{marginTop:'5vw', position:'sticky',top:'25px'}} onSubmit={handleSubmit}>
 
             <Form.Group controlId="formUsername">
                 <Form.Label>LOGIN...</Form.Label><br></br>
@@ -58,7 +58,7 @@ export const LoginView = ({onLoggedIn}) =>
                 <Form.Label>Password: </Form.Label>
                 <Form.Control type = 'password' value={password} onChange={(e)=>setPassword(e.target.value)} required/>
             </Form.Group>
-            <Button variant = 'primary' type = 'submit'>Submit</Button>
+            <Button variant = 'primary' type = 'submit'>Login</Button>
         </Form>
 
         /*<form onSubmit={handleSubmit}>

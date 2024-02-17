@@ -1,11 +1,39 @@
 import React from "react";
 //import { MovieCard } from "../movieCard/movieCard";
 import { Col,Button } from "react-bootstrap";
-export const MovieView = ({movieData,onBackClick,addFav}) =>
+export const MovieView = ({movieData,onBackClick,user,token}) =>
 {
 
+    const addFav = (event) =>
+  {
+    //const sm = 
+      event.preventDefault();
+      fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+user.Username+'/favs',
+      {
+        method: "PUT",
+        headers: { Authorization: 'Bearer '+token,"Content-Type":"application/json"},
+        body:JSON.stringify({MovieID:movieData._id})
+      }).then((response) => {
+        if (response.ok) {
+          alert('fav added!? check console log ' + movieData._id + ' ' + movieData.title);
+          console.log(user.Favorites);
+          console.log(response);
+          console.log(user);
+            return response.json();
+            
+        } else {
+            alert("Failed to add");
+        }
+    }).catch(error => {
+      console.error('Error: ', error);
+  });
+  }
+
     return (//this is the main movie view component, which displays all of the movies data/info
-    <Col style={{textAlign:'center',border:'2px solid',marginTop:'15vw'}}> 
+    <Col >
+    
+    <div style={{textAlign:'center',border:'2px solid',marginTop:'15vw',backgroundColor:'#fa921b'}}> 
+    <h2 style ={{textDecoration:'underline'}}>Movie View</h2>
         <div>{movieData.imageURL}</div>
         <div>Title: {movieData.title}</div>
         <div> Director: {movieData.director}</div>
@@ -13,9 +41,10 @@ export const MovieView = ({movieData,onBackClick,addFav}) =>
         <div>Genre: {movieData.genre}</div>
         <div>Tagline: {movieData.tagline}</div>
         <div>Description: {movieData.description}</div>
-        <Button onClick={addFav()}>Favorite</Button>
-        
+       
+        <Button style = {{margin:'5px'}} onClick={addFav}>Favorite</Button>
         <Button onClick={onBackClick} >back</Button>
+        </div>
     </Col>
     );
 };

@@ -1,9 +1,17 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Col } from "react-bootstrap";
+//import { Button, Col } from "react-bootstrap";
+
+
+
 export const MovieCard = ({movieData,onMovieClick}) =>
 {
-    return <Col style={{cursor:"pointer",margin:'5px', border:'1px solid',borderRadius:'5px'}} onClick={()=>{onMovieClick(movieData)}}>{movieData.title}</Col>;
+    return (
+    <>
+        <div style={{className:'card', cursor:"pointer" ,backgroundColor:'#fa921b',margin:'5px', border:'1px solid',borderRadius:'5px'}} onClick={()=>{onMovieClick(movieData)}}>{movieData.title}
+        </div>
+    
+    </>)
 };
 
 MovieCard.PropTypes = {

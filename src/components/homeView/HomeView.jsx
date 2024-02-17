@@ -1,6 +1,6 @@
 export const HomeView= ()=>
 {
     return (
-        <div>this is the main index page</div>
+        <div style={{marginTop:'20vw', textAlign:"center"}}><h1>this is the main index page</h1></div>
     )
 }

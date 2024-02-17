@@ -1,0 +1,11 @@
+ul,li{
+    list-style: none;
+}
+
+.hide{
+    display: none;
+}
+.profileView{
+    display:flex;
+    flex-direction: column;
+}

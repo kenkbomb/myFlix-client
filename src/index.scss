@@ -11,4 +11,24 @@ $color: steelblue;
 }
 .button{
   margin-top: 5px;
+  margin-bottom: 5px;
 }
+.searchInput{
+  margin-top: 1vw;
+  color: #c3ecfa;
+}
+.profileView{
+  display:flex;
+  flex-direction: column;
+}
+.card:hover{
+  background-color:rgb(238, 80, 17);
+  transition: 1s;
+  transform:scale(1.1);
+}
+.loginForm{
+  margin-top: 5vw;
+  box-sizing: border-box;
+}
+
+

@@ -1,3 +1,11 @@
+ul, li {
+  list-style: none;
+}
+
+.hide {
+  display: none;
+}
+
 :root, [data-bs-theme="light"] {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -13213,28 +13221,6 @@ textarea.form-control-lg {
 
 .button {
   margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.searchInput {
-  color: #c3ecfa;
-  margin-top: 1vw;
-}
-
-.profileView {
-  flex-direction: column;
-  display: flex;
-}
-
-.card:hover {
-  background-color: #ee5011;
-  transition: all 1s;
-  transform: scale(1.1);
-}
-
-.loginForm {
-  box-sizing: border-box;
-  margin-top: 5vw;
 }
 
 :root, [data-bs-theme="light"] {
@@ -26583,4 +26569,4 @@ textarea.form-control-lg {
   }
 }
 
-/*# sourceMappingURL=index.ce1d6491.css.map */
+/*# sourceMappingURL=index.b494b16f.css.map */

@@ -27,16 +27,19 @@ export const LoginView = ({onLoggedIn}) =>
     .then((data)=>
     {
 
-        alert('Welcome  '+ data.user.Username + '!');
+        
        // alert(data.Username);
         if (data.user) 
             {
+                alert('Welcome  '+ data.user.Username + '!');
                 localStorage.setItem('user',JSON.stringify(data.user));
                 localStorage.setItem('token',data.token);
              onLoggedIn(data.user, data.token);
-            } else 
+            } 
+            else 
           {
-            alert("No such user " + data.user);
+            alert("No such user " + data.Username);//issue here with non-hashed password.
+            console.log(data);
           }
     })
         .catch((e) => {
@@ -58,18 +61,9 @@ export const LoginView = ({onLoggedIn}) =>
                 <Form.Label>Password: </Form.Label>
                 <Form.Control type = 'password' value={password} onChange={(e)=>setPassword(e.target.value)} required/>
             </Form.Group>
-            <Button variant = 'primary' type = 'submit'>Login</Button>
+            <Button className="button" variant = 'primary' type = 'submit'>Login</Button>
         </Form>
 
-        /*<form onSubmit={handleSubmit}>
-            <label>LOGIN...</label><br></br>
-            <label>Username: 
-            <input type = 'text' value = {username} onChange={(e) => setUsername(e.target.value)} required></input>
-            </label><br></br>
-            <label>Password: 
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
-            </label><br></br>
-            <button type="submit">SUBMIT</button>
-        </form>*/
+       
     );
-};//}
+};

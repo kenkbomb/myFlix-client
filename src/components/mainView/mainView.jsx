@@ -10,15 +10,14 @@ import { ProfileView } from "../profileView/profileView";
 import { HomeView } from "../homeView/HomeView";
 
 import { Col, Container,Button,Row,Form } from "react-bootstrap";
-//import {Row} from "react-bootstrap";
+
 import { BrowserRouter,Route,Routes,Navigate } from "react-router-dom";//for routing
 import '../../index.scss';//remove?
 
 
 let matches = [];
 let moviesFromApi = [];
-//let moviesBU = [];
-//const [isMatch,setIsMatch] = useState(false);
+
 //---------------------------------------------------------------------------------------------------------------
 export const MainView = () =>
 {
@@ -36,6 +35,7 @@ export const MainView = () =>
   //search button vars---------------------------------------------
   const [buttonSearch,setButtonSearch] = useState(false);//a toggle bool to help with search logic...
   const [searchButtonText,setSearchButtonText] = useState('Search');//the text of the search button...
+ //----------------------------------------------------------------------------------------------------
  
   //--------------------------------------------------------------------------------------------------------------
   function doLogout()
@@ -46,8 +46,11 @@ export const MainView = () =>
     console.log('go back to login page');
     <Navigate to = '/logout'/>;
     console.log("test");
+    alert('Returning to Login');
 
   }
+  //--------------------------------------------------------------------------------------------------------------
+  //Below, the 'search' function logic...
   //---------------------------------------------------------------------------------------------------------------
   const doSearch =() =>
   {
@@ -94,7 +97,8 @@ export const MainView = () =>
     }
     setButtonSearch(!buttonSearch);
   }
-
+//-----------------------------------------------------------------------------------------------------------
+//below, the delete user logic...
 //-----------------------------------------------------------------------------------------------------------
 const deleteUser = () =>
 {
@@ -113,7 +117,7 @@ const deleteUser = () =>
   }).catch(error =>
     {
       console.log(error)
-    });//alert('delete button pressed, delete this user');
+    });
 }
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -163,8 +167,6 @@ const deleteUser = () =>
             setMovies(matches);
            
           }
-          
-          
         });
 
     },[token,match,buttonSearch]);//empty dependancy array is the same as using an 'onMount',which means only call/do once...

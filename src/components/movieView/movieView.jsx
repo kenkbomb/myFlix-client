@@ -1,8 +1,11 @@
 import React from "react";
 //import { MovieCard } from "../movieCard/movieCard";
 import { Col,Button } from "react-bootstrap";
-export const MovieView = ({movieData,onBackClick,user,token}) =>
+import { useState } from "react";
+
+export const MovieView = ({movieData,onBackClick,user,token,favs}) =>
 {
+  
 
     const addFav = (event) =>
   {

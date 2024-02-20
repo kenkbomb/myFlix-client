@@ -2,21 +2,27 @@ import React from "react";
 import { Button, Col,Form } from "react-bootstrap";
 import { MovieCard } from "../movieCard/movieCard";
 import { MovieView } from "../movieView/movieView";
+
 import { useState } from "react";
 import { useEffect } from "react";
-//import './profile.css'
 
-export const ProfileView = ({userData,moviesData,deleteMe,token,setUser}) =>
+
+
+export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
 {
-   // let USER = useState(userData);
+   
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
     const [show,toggleShow] = useState(false);
-    const [favs,setFavs] = useState(moviesData.filter(m => userData.Favorites.includes(m._id)));
+    
     const [theUserData,setTheUserData] = useState(userData);
+    
+    const [favs,setFavs] = useState(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
+    const [f,s] = useState(0);
+    //------------------------------------------------------------------------------------------------------
 
     useEffect(()=>
     {
@@ -27,22 +33,33 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,setUser}) =>
           .then((response)=>response.json())
           .then((data)=>{
             console.log(data);
-            //const userData = data;
-            //setUser();
+            
+            setTheUserData(data);
+        
+            setFavs(moviesData.filter(m => data.Favorites.includes(m._id)));
+          })},[f]);
+   //------------------------------------------------------------------------------------------------------------
+   const fetchFavs = ()=>
+    {
+      //if(!user){return;}//if there is no user, end this function...
+  
+      fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+userData.Username,
+      {headers:{Authorization: `Bearer ${token}`}})
+          .then((response)=>response.json())
+          .then((data)=>{
+            console.log(data);
+            
             setTheUserData(data);
             console.log('the user data is ' + theUserData);
             console.log(theUserData.Username);
             console.log(theUserData.Favorites);
             setFavs(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
-          })},[favs]);
-   
-   
-    let favoriteMovies = moviesData.filter(m => userData.Favorites.includes(m._id));
-    
-    console.log(favoriteMovies.length);
+          })};
+       
 //---------------------------------------------------------------------------------------------------------------
     const removeFav = (movie) =>
     {
+      
       fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+userData.Username+'/favs/'+movie._id,
       {
         method: "DELETE",
@@ -51,23 +68,18 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,setUser}) =>
       }).then((response) => {
         if (response.ok) {
           alert('fav movie ' + movie.title+ ' removed from '+ userData.Username+"'s favorites!");
-         // console.log(user.Favorites);
-         localStorage.setItem('user',JSON.stringify(data));
-         //localStorage.setItem('token',)
-          console.log(response);
-          //console.log(user);
-         // setUser(userData);
-          window.location.reload();//remove?
-          setFavs(moviesData.filter(m => userData.Favorites.includes(m._id)));
-          return response.json();
-            
-            
-        } else {
+         console.log(f);
+        console.log(response);
+        return response.json();
+        
+      } else {
             alert("Failed to remove fav, " + movie.title+' ' + response);
         }
     }).catch(error => {
       console.error('Error: ', error);
   });
+  
+ s(f+1);
     }
   //-----------------------------------------------------------------------------------------------------------
     const updateUser =(event) =>
@@ -89,12 +101,17 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,setUser}) =>
       }).then((response) => {
         if (response.ok) {
           alert('user updated!'+ userData);
-         // console.log(user.Favorites);
+         
          localStorage.setItem('user',JSON.stringify(data));
-         window.location.reload();
-         //localStorage.setItem('token',)
+         
+        localStorage.setItem('token',data.token);
+         
           console.log(response);
-          //console.log(user);
+          
+          
+          userData = data;//******************  test, may have to delete!!! */
+          console.log(JSON.stringify(userData));//***********************test, may have to delete!!! */
+
             return response.json();
             
         } else {
@@ -105,11 +122,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,setUser}) =>
   });
     }
 //--------------------------------------------------------------------------------------------------------------
-useEffect(()=>
-{
-  console.log('useEffect hook test here');
-  
-},[]);    
+    
 
 return (
         <>
@@ -156,7 +169,7 @@ return (
             {
                 return(
                 <>
-                <div style={{border:'1px solid', textAlign:'center', backgroundColor:'cornflowerblue'}} onClick={()=>{removeFav(movie)}}>{movie.title} click to remove from favorites</div>
+                <div style={{border:'1px solid', textAlign:'center', backgroundColor:'cornflowerblue'}} onClick={()=>{removeFav(movie)}}>{movie.title}    // click to remove from favorites//</div>
                 {/*<MovieCard movieData={movie} onFavClick={getFavMov(movie)} removeFav={removeFav}/> */}
 
                 
@@ -167,5 +180,7 @@ return (
         
         </Col>
         </>
-    )
+    );
+    
+    
 }

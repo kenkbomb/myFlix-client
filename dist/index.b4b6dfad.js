@@ -41774,7 +41774,7 @@ const ProfileView = ({ userData, moviesData, deleteMe, token })=>{
         }).catch((error)=>{
             console.error("Error: ", error);
         });
-        s(f + 1);
+        s(f + 1); //used to update the useEffect...
     };
     //-----------------------------------------------------------------------------------------------------------
     const updateUser = (event)=>{
@@ -41800,6 +41800,7 @@ const ProfileView = ({ userData, moviesData, deleteMe, token })=>{
                 console.log(response);
                 userData = data; //******************  test, may have to delete!!! */
                 console.log(JSON.stringify(userData)); //***********************test, may have to delete!!! */
+                s(f + 1); //re-render the view...
                 return response.json();
             } else alert("Failed to update" + response);
         }).catch((error)=>{

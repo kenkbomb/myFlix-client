@@ -79,7 +79,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
       console.error('Error: ', error);
   });
   
- s(f+1);
+ s(f+1);//used to update the useEffect...
     }
   //-----------------------------------------------------------------------------------------------------------
     const updateUser =(event) =>
@@ -111,7 +111,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
           
           userData = data;//******************  test, may have to delete!!! */
           console.log(JSON.stringify(userData));//***********************test, may have to delete!!! */
-
+          s(f+1);//re-render the view...
             return response.json();
             
         } else {

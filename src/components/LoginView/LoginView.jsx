@@ -15,7 +15,6 @@ export const LoginView = ({onLoggedIn}) =>
         Password:password
     };
     
-    //alert('submit test');
 //-------------------------------------------------------------------------------------------------
     fetch('https://myflixdb-162c62e51cf6.herokuapp.com/login',
     //fetch('127.0.0.1:8080/login',
@@ -26,9 +25,6 @@ export const LoginView = ({onLoggedIn}) =>
     }).then((response)=>response.json())
     .then((data)=>
     {
-
-        
-       // alert(data.Username);
         if (data.user) 
             {
                 alert('Welcome  '+ data.user.Username + '!');
@@ -38,7 +34,7 @@ export const LoginView = ({onLoggedIn}) =>
             } 
             else 
           {
-            alert("No such user " + data.Username);//issue here with non-hashed password.
+            alert("No such user " + data.Username);
             console.log(data);
           }
     })

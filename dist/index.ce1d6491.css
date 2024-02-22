@@ -13202,6 +13202,11 @@ textarea.form-control-lg {
   }
 }
 
+* {
+  box-sizing: border-box;
+  display: block;
+}
+
 .my-flix {
   color: #4682b4;
 }
@@ -13212,7 +13217,7 @@ textarea.form-control-lg {
 }
 
 .button {
-  margin-top: 5px;
+  margin-top: 2vw;
   margin-bottom: 5px;
 }
 

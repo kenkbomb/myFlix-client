@@ -1,8 +1,5 @@
 import React from "react";
 import PropTypes from 'prop-types';
-//import { Button, Col } from "react-bootstrap";
-
-
 
 export const MovieCard = ({movieData,onMovieClick}) =>
 {

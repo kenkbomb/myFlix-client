@@ -1,6 +1,9 @@
 @import '~bootstrap/scss/bootstrap.scss';
 $color: steelblue;
-
+*{
+  display:block;
+  box-sizing: border-box;
+}
 .my-flix {
   color: $color;
 }
@@ -10,7 +13,7 @@ $color: steelblue;
   margin: 0 auto;
 }
 .button{
-  margin-top: 5px;
+  margin-top: 2vw;
   margin-bottom: 5px;
 }
 .searchInput{

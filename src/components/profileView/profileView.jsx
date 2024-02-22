@@ -1,25 +1,16 @@
 import React from "react";
 import { Button, Col,Form } from "react-bootstrap";
-import { MovieCard } from "../movieCard/movieCard";
-import { MovieView } from "../movieView/movieView";
-
 import { useState } from "react";
 import { useEffect } from "react";
 
-
-
-export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
+export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
 {
-   
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
     const [show,toggleShow] = useState(false);
-    
     const [theUserData,setTheUserData] = useState(userData);
-    
     const [favs,setFavs] = useState(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
     const [f,s] = useState(0);
     //------------------------------------------------------------------------------------------------------
@@ -39,7 +30,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
             setFavs(moviesData.filter(m => data.Favorites.includes(m._id)));
           })},[f]);
    //------------------------------------------------------------------------------------------------------------
-   const fetchFavs = ()=>
+   /*const fetchFavs = ()=>
     {
       //if(!user){return;}//if there is no user, end this function...
   
@@ -54,7 +45,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
             console.log(theUserData.Username);
             console.log(theUserData.Favorites);
             setFavs(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
-          })};
+          })};*/
        
 //---------------------------------------------------------------------------------------------------------------
     const removeFav = (movie) =>
@@ -64,13 +55,16 @@ export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
       {
         method: "DELETE",
         headers: { Authorization: 'Bearer '+token,"Content-Type":"application/json"},
-        //body:JSON.stringify()
+       
       }).then((response) => {
         if (response.ok) {
-          alert('fav movie ' + movie.title+ ' removed from '+ userData.Username+"'s favorites!");
+          
+         alert('fav movie ' + movie.title+ ' removed from '+ userData.Username+"'s favorites!");
          console.log(f);
-        console.log(response);
-        return response.json();
+         console.log(response);
+          console.log('re-render the view, update the fav list');
+          s(f+1);//used to update the useEffect...
+         return response.json();
         
       } else {
             alert("Failed to remove fav, " + movie.title+' ' + response);
@@ -78,9 +72,9 @@ export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
     }).catch(error => {
       console.error('Error: ', error);
   });
-  
- s(f+1);//used to update the useEffect...
-    }
+}
+  //----------------------------------------------------------------------------------------------------------
+  //below, update user
   //-----------------------------------------------------------------------------------------------------------
     const updateUser =(event) =>
     {
@@ -102,17 +96,18 @@ export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
         if (response.ok) {
           alert('user updated!'+ userData);
          
-         localStorage.setItem('user',JSON.stringify(data));
-         
+        localStorage.setItem('user',JSON.stringify(data));
         localStorage.setItem('token',data.token);
-         
-          console.log(response);
+
+        console.log(response);
           
           
-          userData = data;//******************  test, may have to delete!!! */
-          console.log(JSON.stringify(userData));//***********************test, may have to delete!!! */
+        userData = data;//******************  updates the old userData with the new data taken from the form!!! */
+         // console.log(JSON.stringify(userData))  logs out the stringified NEW UPDATED userdata!!! */
           s(f+1);//re-render the view...
-            return response.json();
+          
+          logout();// calls logout from mainview as a prop function, to go back to the login page after updating user...
+            return response.json();//return the response of the request...
             
         } else {
             alert("Failed to update" + response);
@@ -122,8 +117,8 @@ export const ProfileView = ({userData,moviesData,deleteMe,token}) =>
   });
     }
 //--------------------------------------------------------------------------------------------------------------
-    
-
+    //below, the jsx markup code...
+//--------------------------------------------------------------------------------------------------------------
 return (
         <>
         <Col style={{marginTop:'5vw'}}>
@@ -170,9 +165,6 @@ return (
                 return(
                 <>
                 <div style={{border:'1px solid', textAlign:'center', backgroundColor:'cornflowerblue'}} onClick={()=>{removeFav(movie)}}>{movie.title}    // click to remove from favorites//</div>
-                {/*<MovieCard movieData={movie} onFavClick={getFavMov(movie)} removeFav={removeFav}/> */}
-
-                
                 </>
                 )
             })}

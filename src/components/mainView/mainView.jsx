@@ -138,7 +138,7 @@ const deleteUser = () =>
         .then((response)=>response.json())
         .then((data)=>{
           console.log(data);
-          //moviesBU = JSON.stringify(data);
+          
           moviesFromApi = data.map((movie)=>
           {
               return{
@@ -169,7 +169,7 @@ const deleteUser = () =>
           }
         });
 
-    },[token,match,buttonSearch]);//empty dependancy array is the same as using an 'onMount',which means only call/do once...
+    },[token,match,buttonSearch,user]);//empty dependancy array is the same as using an 'onMount',which means only call/do once...
 
     /*Notice that you’ll need to add token to the second argument of useEffect(). This is known as the dependency array, and it ensures fetch is called every time token changes (for example, after the user logs in). An if statement has also been added to check for token, as there’s no reason to execute the fetch call if there’s no token yet.*/
 //-------------------------------------------------------------------------------------------------------------
@@ -212,8 +212,6 @@ return (
        <LoginView onLoggedIn={(user, token) => {setUser(user);setToken(token);}} />)}
      </>
      }></Route>
-
-
 {/*------------------------------------------------------------------------------------------------*/}
     <Route path = '/signUp'  element = {
       <>
@@ -221,19 +219,13 @@ return (
       </>
     }
   />
-
-  {/*------------------------------------------------------------------------------------------*/}
-   
-
-
-  {/*------------------------------------------------------------------------------------------*/}
+{/*------------------------------------------------------------------------------------------*/}
     <Route style={{border:'2px solid black',marginTop:'10vw'}} path = '/profile' element = {
       <>
-        {!user?(<Navigate to = '/login'/>):(<ProfileView userData={user} moviesData={movies} deleteMe={deleteUser} token={token} setUser={setUser} />)}
+        {!user?(<Navigate to = '/login'/>):(<ProfileView userData={user} moviesData={movies} deleteMe={deleteUser} token={token} setUser={setUser} logout={doLogout} />)}
       </>
     }/>
-
-  {/*-------------------------------------------------------------------------------------------*/}
+{/*-------------------------------------------------------------------------------------------*/}
 
     <Route path = '/movies' element = {
 
@@ -259,8 +251,7 @@ return (
             movieData = {movie}
             onMovieClick = {(newSelectedMovie)=>{
                 setSelectedMovie(newSelectedMovie);
-              // alert(movie.title.toString());
-              alert(newSelectedMovie.title + ' clicked');
+              
             }} />
             </div>
             );
@@ -281,39 +272,5 @@ return (
   )
      
   
-{/*
-//--------------------------------------------------------------------------------------------
-    if(selectedMovie)//if a movie has been selected, return/show the 'MovieView' component...
-    {
-        return <MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)}/>;
-    };
-//-------------------------------------------------------------------------------------------------
 
-  return (
-    <div style={{border:'2px solid black'}}>
-      <Row >
-        <Col></Col>
-        <Col style={{textAlign:'center',border:'1px solid'}}>
-        <h1>My Flix</h1>
-      {movies.map((movie) => {
-        return (
-          <div>
-        <MovieCard 
-        key = {movie.id} 
-        movieData = {movie}
-        onMovieClick = {(newSelectedMovie)=>{
-            setSelectedMovie(newSelectedMovie);
-           // alert(movie.title.toString());
-        }} />
-        </div>
-        );
-      })}
-      <button style={{marginTop:'5px',marginBottom:'5px'}}  onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
-      </Col>
-      <Col></Col>
-    </Row>
-    </div>
-  );
-  //------------------------------------------------------------------------------
-    */}
 };

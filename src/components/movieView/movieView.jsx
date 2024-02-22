@@ -5,11 +5,9 @@ import { useState } from "react";
 
 export const MovieView = ({movieData,onBackClick,user,token,favs}) =>
 {
-  
 
-    const addFav = (event) =>
+ const addFav = (event) =>
   {
-    //const sm = 
       event.preventDefault();
       fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+user.Username+'/favs',
       {
@@ -18,10 +16,7 @@ export const MovieView = ({movieData,onBackClick,user,token,favs}) =>
         body:JSON.stringify({MovieID:movieData._id})
       }).then((response) => {
         if (response.ok) {
-          alert('fav added!? check console log ' + movieData._id + ' ' + movieData.title);
-          console.log(user.Favorites);
-          console.log(response);
-          console.log(user);
+          
             return response.json();
             
         } else {

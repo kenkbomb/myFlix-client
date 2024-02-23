@@ -23,7 +23,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
       {headers:{Authorization: `Bearer ${token}`}})
           .then((response)=>response.json())
           .then((data)=>{
-            console.log(data);
+           // console.log(data);
             
             setTheUserData(data);
         
@@ -46,7 +46,9 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
             console.log(theUserData.Favorites);
             setFavs(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
           })};*/
-       
+    
+//-------------------------------------------------------------------------------------------------------------
+//below, remove a favorite from the user...          
 //---------------------------------------------------------------------------------------------------------------
     const removeFav = (movie) =>
     {
@@ -60,9 +62,9 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
         if (response.ok) {
           
          alert('fav movie ' + movie.title+ ' removed from '+ userData.Username+"'s favorites!");
-         console.log(f);
+         //console.log(f);
          console.log(response);
-          console.log('re-render the view, update the fav list');
+          //console.log('re-render the view, update the fav list');
           s(f+1);//used to update the useEffect...
          return response.json();
         

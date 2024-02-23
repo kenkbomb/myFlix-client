@@ -43,11 +43,17 @@ export const MainView = () =>
     setUser(null); 
     setToken(null); 
     localStorage.clear();
-    console.log('go back to login page');
+    //console.log('go back to login page');
     <Navigate to = '/logout'/>;
-    console.log("test");
+    //console.log("test");
     alert('Returning to Login');
 
+  }//------------------------------------------------------------------------------------------------------------
+  function gotoLogin()
+  {
+    alert('Please Login');
+    <Navigate to ={'/login'}/>;//not going to work, overriden at the markup section via conditional rendering...
+    
   }
   //--------------------------------------------------------------------------------------------------------------
   //Below, the 'search' function logic...
@@ -68,20 +74,20 @@ export const MainView = () =>
    if(search ===''||matches.length===0&&movies.length===moviesFromApi.length)//clean but empty search, no match
    {
     alert('no matches found for '+search+ ', please rephrase...');
-    console.log('no matches found! ' + matches.length);
-    console.log(JSON.stringify(moviesFromApi) + ' from moviesFromApi');
+   // console.log('no matches found! ' + matches.length);
+    //console.log(JSON.stringify(moviesFromApi) + ' from moviesFromApi');
     
     setSearchButtonText('Search');
   }
    if(search!=''&& movies.length===moviesFromApi.length)//first clean search...
    {
-      console.log('this is the search result: ' + JSON.stringify(matches));
-      console.log(matches.length + ' test match length');
-      console.log(movies);
+      //console.log('this is the search result: ' + JSON.stringify(matches));
+      //console.log(matches.length + ' test match length');
+      //console.log(movies);
       
       setMatch(JSON.stringify(matches));
       setMatch(match.map((movie)=>{console.log(movie.title)}));
-      console.log(matches.length);
+      //console.log(matches.length);
       setMovies(moviesFromApi);
     }
     if(search!=''&&movies.length<moviesFromApi.length)//dirty search...
@@ -93,7 +99,7 @@ export const MainView = () =>
     }
     if(matches.length!=0&&matches.length!=11)
     {
-      console.log('reset search jank');
+     // console.log('reset search jank');
     }
     setButtonSearch(!buttonSearch);
   }
@@ -112,6 +118,7 @@ const deleteUser = () =>
       alert('user ' + user.Username + " has 'unsubscribed'!");
       localStorage.clear();
       setUser(null);
+      setToken(null);//** */
       <Navigate to={'/'}/>
     }
   }).catch(error =>
@@ -137,7 +144,7 @@ const deleteUser = () =>
         {headers:{Authorization: `Bearer ${token}`}})
         .then((response)=>response.json())
         .then((data)=>{
-          console.log(data);
+         // console.log(data);
           
           moviesFromApi = data.map((movie)=>
           {
@@ -156,14 +163,14 @@ const deleteUser = () =>
         
           if(search==='')
           {
-            console.log('match length is ' + matches.length);
+           // console.log('match length is ' + matches.length);
            
           setMovies(moviesFromApi);
           }
           if(search!='' && matches.length!=0)//bug here
           {
           
-            console.log('matches found on ' + search+ ' ' + matches.length );
+           // console.log('matches found on ' + search+ ' ' + matches.length );
             setMovies(matches);
            
           }
@@ -215,14 +222,14 @@ return (
 {/*------------------------------------------------------------------------------------------------*/}
     <Route path = '/signUp'  element = {
       <>
-          {user?(<Navigate to='/'/>):(<SignupView/>)}
+          {user?(<Navigate to='/'/>):(<SignupView gotoLogin={gotoLogin} />)}
       </>
     }
   />
 {/*------------------------------------------------------------------------------------------*/}
     <Route style={{border:'2px solid black',marginTop:'10vw'}} path = '/profile' element = {
       <>
-        {!user?(<Navigate to = '/login'/>):(<ProfileView userData={user} moviesData={movies} deleteMe={deleteUser} token={token} setUser={setUser} logout={doLogout} />)}
+        {!user?(<Navigate to = '/signup'/>):(<ProfileView userData={user} moviesData={movies} deleteMe={deleteUser} token={token} setUser={setUser} logout={doLogout} />)}
       </>
     }/>
 {/*-------------------------------------------------------------------------------------------*/}

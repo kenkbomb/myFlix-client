@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import {Button} from "react-bootstrap";
-export const SignupView = () => {
+import { BrowserRouter,Route,Routes,Navigate } from "react-router-dom";//for routing
+
+export const SignupView = ({gotoLogin}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -9,13 +11,15 @@ export const SignupView = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    
     const data = {
       Username: username,
       Password: password,
       Email: email,
       Birthday: birthday
     };
+
+    if(username.length>=2 && birthday!=''&&password!=''&&email!=''){
 
     fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users', {
       method: "POST",
@@ -25,12 +29,19 @@ export const SignupView = () => {
       }
     }).then((response) => {
       if (response.ok) {
-        alert("Signup successful");
+        alert("Signup successful, please login");
         window.location.reload();
+       // gotoLogin();
+       // <Navigate to ='/login'/>
       } else {
         alert("Signup failed");
       }
-    });
+    });}
+
+    else{
+      alert('please correct formatting...');
+    }
+
   };
   
 //-------------------------------------------------------------------------------------------
@@ -57,7 +68,7 @@ export const SignupView = () => {
         <Form.Label>Birthday: </Form.Label>
         <Form.Control type = 'date' value={birthday} onChange={(e)=>setBirthday(e.target.value)} required></Form.Control>
         </Form.Group>
-        <Button type = 'submit'>Submit</Button>
+        <Button type = 'submit' className="button">Submit</Button>
       </Form>
 
         

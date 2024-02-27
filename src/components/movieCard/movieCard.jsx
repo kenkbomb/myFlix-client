@@ -5,7 +5,7 @@ export const MovieCard = ({movieData,onMovieClick}) =>
 {
     return (
     <>
-        <div style={{className:'card', cursor:"pointer" ,backgroundColor:'#fa921b',margin:'5px', border:'1px solid',borderRadius:'5px'}} onClick={()=>{onMovieClick(movieData)}}>{movieData.title}
+        <div title="click for more details!" style={{className:'card',display:'inline-block', cursor:"pointer",backgroundColor:'#fa921b',marginBottom:'5px', border:'1px solid',textAlign:'center',width:'80%'}} onClick={()=>{onMovieClick(movieData)}}>{movieData.title}
         </div>
     
     </>)
@@ -19,5 +19,6 @@ MovieCard.PropTypes = {
         release:PropTypes.string,
         tagline:PropTypes.string,
         description:PropTypes.string,
+        imageURL:PropTypes.string
         }).isRequired
 };

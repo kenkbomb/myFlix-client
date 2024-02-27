@@ -2,8 +2,9 @@ import React from "react";
 //import { MovieCard } from "../movieCard/movieCard";
 import { Col,Button } from "react-bootstrap";
 import { useState } from "react";
+import Image from "react-bootstrap/Image";
 
-export const MovieView = ({movieData,onBackClick,user,token,favs}) =>
+export const MovieView = ({movieData,onBackClick,user,token}) =>
 {
 
  const addFav = (event) =>
@@ -29,20 +30,48 @@ export const MovieView = ({movieData,onBackClick,user,token,favs}) =>
 
     return (//this is the main movie view component, which displays all of the movies data/info
     <Col >
-    
-    <div style={{textAlign:'center',border:'2px solid',marginTop:'15vw',backgroundColor:'#fa921b'}}> 
-    <h2 style ={{textDecoration:'underline'}}>Movie View</h2>
-        <div>{movieData.imageURL}</div>
-        <div>Title: {movieData.title}</div>
-        <div> Director: {movieData.director}</div>
-        <div>Released: {movieData.release}</div>
-        <div>Genre: {movieData.genre}</div>
-        <div>Tagline: {movieData.tagline}</div>
-        <div>Description: {movieData.description}</div>
-       
-        <Button style = {{margin:'5px'}} onClick={addFav}>Favorite</Button>
-        <Button onClick={onBackClick} >back</Button>
+    { user?
+    <div className="cardBack" style={{marginTop:'5vw'}}> 
+        <div className="movieDetails" style={{display:'flex',flexDirection:'row'}}>
+        <div >
+        <img className="pic" src = {movieData.imageURL} />
         </div>
+        <div className="movieText">
+            <div>Title: {movieData.title}</div>
+            <div> Director: {movieData.director}</div>
+            <div>Released: {movieData.release}</div>
+            <div>Genre: {movieData.genre}</div>
+            <div>Tagline: {movieData.tagline}</div>
+            <div>Description: {movieData.description}</div>
+        </div>
+        </div>
+       { user?
+        <Button style = {{margin:'5px'}} onClick={addFav}>Favorite</Button>
+        :<div></div>
+       }
+        <Button onClick={onBackClick} >Go Back</Button>
+    </div>:
+    <div className="cardBack"> 
+        <div className="movieDetails" style={{display:'flex',flexDirection:'row'}}>
+        <div> <img className="pic" src = {movieData.imageURL} /></div>
+        <div className="movieText">
+
+            <div>Title: {movieData.title}</div>
+            <div> Director: {movieData.director}</div>
+            <div>Released: {movieData.release}</div>
+            <div>Genre: {movieData.genre}</div>
+            <div>Tagline: {movieData.tagline}</div>
+            <div>Description: {movieData.description}</div>
+        </div>
+        </div>
+       { user?
+        <Button style = {{margin:'5px'}} onClick={addFav}>Favorite</Button>
+        :<div></div>
+       }
+        <Button className="button" onClick={onBackClick} >Go Back</Button>
+    </div>
+}
     </Col>
+      
     );
 };

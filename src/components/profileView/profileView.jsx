@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Col,Form } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
+import { MovieCard } from "../movieCard/movieCard";
+import { MovieView } from "../movieView/movieView";
 
 export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
 {
@@ -13,6 +15,8 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
     const [theUserData,setTheUserData] = useState(userData);
     const [favs,setFavs] = useState(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
     const [f,s] = useState(0);
+    const [selectedMovie,setSelectedMovie] = useState(null);
+    //const delButt = new Button(Label,disabled);
     //------------------------------------------------------------------------------------------------------
 
     useEffect(()=>
@@ -123,7 +127,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
 //--------------------------------------------------------------------------------------------------------------
 return (
         <>
-        <Col style={{marginTop:'5vw'}}>
+        <Col style={{marginTop:'2vw'}}>
             <Button  className="button"  onClick={()=>{toggleShow(!show)}}>{show? 'Close Form':'Edit Profile'}</Button>
         {show && <Form>
         <h2>{userData.Username}</h2>
@@ -146,30 +150,40 @@ return (
         <Form.Label>Birthday: </Form.Label>
         <Form.Control type = 'date' value={birthday} onChange={(e)=>setBirthday(e.target.value)} required></Form.Control>
         </Form.Group>
+        <div className="confirmUpdate">
+        <Form.Group>
         <Button className="button" type = 'submit' onClick={updateUser}>Submit</Button>
-        <Button className="button" style={{marginLeft:'5px'}} onClick={deleteMe}>Delete</Button>
+        <Button id="delbut" title="click to unsubscribe and delete this account" disabled className="button" style={{marginLeft:'5px'}} onClick={deleteMe}>Delete</Button>
+        
+        <Form.Check type = 'switch' label = 'unlock' onClick={()=>{}}>
+
+        </Form.Check>
+        </Form.Group>
+        </div>
       </Form>}
 
-      <section style={{border:'1px solid',className:'profileView'}}>
+      <section className="profileView">
         <ul style={{listStyle:'none', textAlign:'center'}}><h3>On File...</h3> 
           <li>Username: {userData.Username} </li>
           <li> Email: {userData.Email} </li>
           <li> Birthdate: {userData.Birthday}</li>
         </ul>
       </section>
-
-        <div>
+            {/*favs section------------------------------------------------------------------------------   */}
+            
+        <div className="favsList">
           
-            {favs.length>0?<h2>Favs: </h2>:<h2>No Favorites!</h2>}
-           
+            {favs.length>0?<h2 style={{textAlign:'center',textDecoration:'underLine'}}>Favorites </h2>:<h2>No Favorites!</h2>}
+            {!selectedMovie?<div className='favs'>
             {favs.map((movie)=>
             {
                 return(
                 <>
-                <div style={{border:'1px solid', textAlign:'center', backgroundColor:'cornflowerblue'}} onClick={()=>{removeFav(movie)}}>{movie.title}    // click to remove from favorites//</div>
+                  <MovieCard movieData={movie} onMovieClick ={(movie)=>{setSelectedMovie(movie)}} />
+                  <div title="click to remove from favorites" style={{border:'1px solid', textAlign:'center',width:'5%',height:'100%', display:'inline-block', backgroundColor:'cornflowerblue'}} onClick={()=>{removeFav(movie)}}>X</div>
                 </>
                 )
-            })}
+            })}</div>:<MovieView movieData={selectedMovie} onBackClick={()=>{setSelectedMovie(null)}} />}
         </div>
         
         </Col>

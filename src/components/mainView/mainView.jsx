@@ -153,7 +153,7 @@ const deleteUser = () =>
                 title:movie.Title,
                 director:movie.Director,
                 release:movie.Release,
-                imageURL:movie.ImageURL,
+                imageURL:movie.Imagepath,
                 genre:movie.Genre,
                 tagline:movie.Tagline,
                 description:movie.Description
@@ -262,7 +262,7 @@ return (
             }} />
             </div>
             );
-          })}
+          })}{/*end of movies map*/}
           
           </Col>
           <Col></Col>

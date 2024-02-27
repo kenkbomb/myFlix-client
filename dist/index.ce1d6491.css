@@ -13204,11 +13204,25 @@ textarea.form-control-lg {
 
 * {
   box-sizing: border-box;
+  font-size: clamp(1.4vw, 1rem, 1.8vw);
   display: block;
 }
 
 .my-flix {
   color: #4682b4;
+}
+
+.favsList {
+  flex-direction: column;
+  place-content: center;
+  width: 100%;
+  display: flex;
+}
+
+.favs {
+  flex-direction: row;
+  width: 100%;
+  margin-left: 7vw;
 }
 
 .center {
@@ -13227,6 +13241,9 @@ textarea.form-control-lg {
 }
 
 .profileView {
+  background-color: #6495ed;
+  border: 1px solid #c3ecfa;
+  border-radius: 5px;
   flex-direction: column;
   display: flex;
 }
@@ -13240,6 +13257,48 @@ textarea.form-control-lg {
 .loginForm {
   box-sizing: border-box;
   margin-top: 5vw;
+}
+
+.nav {
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.confirmUpdate {
+  flex-direction: row;
+  display: flex;
+}
+
+.pic {
+  background-color: #000;
+  width: 20vw;
+  height: 20vw;
+  transition: all 1s;
+}
+
+.pic:hover {
+  z-index: 1000;
+  transition: all 1s;
+  transform: scale(1.2);
+}
+
+.movieDetails {
+  text-align: left;
+  background-color: #f8b864;
+  border: 1px solid;
+  border-radius: 10px;
+  margin-right: 5vw;
+}
+
+.cardBack {
+  text-align: center;
+  width: "100%";
+  background-color: #1f1e1e;
+  border: 2px solid;
+}
+
+.movieText {
+  padding-left: 1vw;
 }
 
 :root, [data-bs-theme="light"] {

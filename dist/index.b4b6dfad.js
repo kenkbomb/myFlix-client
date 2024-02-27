@@ -42379,14 +42379,27 @@ const HomeView = ()=>{
         className: "homepage",
         style: {
             marginTop: "20vw",
-            textAlign: "center"
+            textAlign: "center",
+            textDecoration: "underline"
         },
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-            children: "this is the main index page"
-        }, void 0, false, {
+            children: [
+                "Welcome to ",
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    style: {
+                        color: "red"
+                    },
+                    children: "MyFlix!"
+                }, void 0, false, {
+                    fileName: "src/components/homeView/HomeView.jsx",
+                    lineNumber: 4,
+                    columnNumber: 124
+                }, undefined)
+            ]
+        }, void 0, true, {
             fileName: "src/components/homeView/HomeView.jsx",
             lineNumber: 4,
-            columnNumber: 82
+            columnNumber: 109
         }, undefined)
     }, void 0, false, {
         fileName: "src/components/homeView/HomeView.jsx",

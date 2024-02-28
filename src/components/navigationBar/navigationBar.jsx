@@ -5,9 +5,11 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
     return(
         <Navbar bg="primary" expand="sm" fixed="top" > 
             <Container className='nav'>
-                <Navbar.Brand as={Link} to="/movies">
+                {user?(<Navbar.Brand as={Link} to="/movies">
                     MyMovies
-                </Navbar.Brand>
+                </Navbar.Brand>):<Navbar.Brand as={Link} to="/login">
+                    MyMovies
+                </Navbar.Brand>}
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="-basic-navbar-nav">
                     <Nav className="me-auto">

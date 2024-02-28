@@ -164,15 +164,12 @@ const deleteUser = () =>
           if(search==='')
           {
            // console.log('match length is ' + matches.length);
-           
-          setMovies(moviesFromApi);
+           setMovies(moviesFromApi);
           }
           if(search!='' && matches.length!=0)//bug here
           {
-          
-           // console.log('matches found on ' + search+ ' ' + matches.length );
+          // console.log('matches found on ' + search+ ' ' + matches.length );
             setMovies(matches);
-           
           }
         });
 
@@ -198,10 +195,7 @@ return (
 {/*-----------------------------------------------------------------------------------------------*/}
         <Route path="/" element = {
           <>
-              {/*<HomeView></HomeView>*/}
-
-              {<Navigate to = '/movies'/>}
-              
+             {user?(<Navigate to = '/movies'/>):<Navigate to = '/login'/>}
           </>
         }></Route>
         

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col,Form } from "react-bootstrap";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect,useRef } from "react";
 import { MovieCard } from "../movieCard/movieCard";
 import { MovieView } from "../movieView/movieView";
 
@@ -16,9 +16,14 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
     const [favs,setFavs] = useState(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
     const [f,s] = useState(0);
     const [selectedMovie,setSelectedMovie] = useState(null);
-    //const delButt = new Button(Label,disabled);
+    const [delBn,setDelbn] = useState();//the actual button
+    const [lockbn,setLockbtn] = useState('unlock');
+    const lockbtn = useRef();//the switch
+    const delBtn = useRef();
+    
     //------------------------------------------------------------------------------------------------------
-
+      //below the useEffect that handles the favorites list...
+    //------------------------------------------------------------------------------------------------------
     useEffect(()=>
     {
       //if(!user){return;}//if there is no user, end this function...
@@ -27,30 +32,11 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
       {headers:{Authorization: `Bearer ${token}`}})
           .then((response)=>response.json())
           .then((data)=>{
-           // console.log(data);
-            
             setTheUserData(data);
-        
             setFavs(moviesData.filter(m => data.Favorites.includes(m._id)));
           })},[f]);
    //------------------------------------------------------------------------------------------------------------
-   /*const fetchFavs = ()=>
-    {
-      //if(!user){return;}//if there is no user, end this function...
-  
-      fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+userData.Username,
-      {headers:{Authorization: `Bearer ${token}`}})
-          .then((response)=>response.json())
-          .then((data)=>{
-            console.log(data);
-            
-            setTheUserData(data);
-            console.log('the user data is ' + theUserData);
-            console.log(theUserData.Username);
-            console.log(theUserData.Favorites);
-            setFavs(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
-          })};*/
-    
+   
 //-------------------------------------------------------------------------------------------------------------
 //below, remove a favorite from the user...          
 //---------------------------------------------------------------------------------------------------------------
@@ -128,7 +114,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
 return (
         <>
         <Col style={{marginTop:'2vw'}}>
-            <Button  className="button"  onClick={()=>{toggleShow(!show)}}>{show? 'Close Form':'Edit Profile'}</Button>
+            <Button title='click to edit the user profile' className="button"  onClick={()=>{toggleShow(!show)}}>{show? 'Close Form':'Edit Profile'}</Button>
         {show && <Form>
         <h2>{userData.Username}</h2>
         <Form.Group controlId="formUserName">
@@ -153,9 +139,25 @@ return (
         <div className="confirmUpdate">
         <Form.Group>
         <Button className="button" type = 'submit' onClick={updateUser}>Submit</Button>
-        <Button id="delbut" title="click to unsubscribe and delete this account" disabled className="button" style={{marginLeft:'5px'}} onClick={deleteMe}>Delete</Button>
+        <Button ref={delBtn} id="delbut" title="click to unsubscribe and delete this account" disabled className="button" style={{marginLeft:'5px'}} onClick={deleteMe}>Delete</Button>
         
-        <Form.Check type = 'switch' label = 'unlock' onClick={()=>{}}>
+        <Form.Check title ='click to lock and unlock the unsubscribe/delete user button.'  ref={lockbtn} type = 'switch' label = {lockbn} onClick={()=>{
+          if(delBtn.current.disabled)
+          {
+          delBtn.current.disabled=false;
+          //lockbtn.label='lock';
+          setLockbtn('click to lock the delete user button');
+          //setDelbn(delBn.disabled=false);
+          }
+          else{//delBtn.disabled=true;
+             // lockbtn.label='unlock';
+              setLockbtn('click to unlock the delete user button');
+              //setDelbn(style={display:'none'})
+              delBtn.current.disabled = true;
+              //setDelbn(className='hide');
+          }
+       // alert('delete button is disabled?'+' '+delBtn.disabled+' '+lockbtn.label);
+        }}>
 
         </Form.Check>
         </Form.Group>

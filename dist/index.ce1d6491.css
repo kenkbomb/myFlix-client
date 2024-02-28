@@ -13245,6 +13245,8 @@ textarea.form-control-lg {
   border: 1px solid #c3ecfa;
   border-radius: 5px;
   flex-direction: column;
+  width: 85%;
+  margin-left: 7vw;
   display: flex;
 }
 
@@ -13299,6 +13301,10 @@ textarea.form-control-lg {
 
 .movieText {
   padding-left: 1vw;
+}
+
+.hide {
+  display: none;
 }
 
 :root, [data-bs-theme="light"] {

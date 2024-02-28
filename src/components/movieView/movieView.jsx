@@ -6,7 +6,10 @@ import Image from "react-bootstrap/Image";
 
 export const MovieView = ({movieData,onBackClick,user,token}) =>
 {
-
+    //const [isFaved,setIsFaved] = useState(topFavs);
+//-------------------------------------------------------------------------------------------------------------
+    
+//----------------------------------------------------------------------------------------------------------------
  const addFav = (event) =>
   {
       event.preventDefault();
@@ -17,7 +20,7 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
         body:JSON.stringify({MovieID:movieData._id})
       }).then((response) => {
         if (response.ok) {
-          
+          alert('Added '+movieData.title+' to your Favorites!');
             return response.json();
             
         } else {
@@ -27,6 +30,8 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
       console.error('Error: ', error);
   });
   }
+//---------------------------------------------------------------------------------------------------------------------
+
 
     return (//this is the main movie view component, which displays all of the movies data/info
     <Col >

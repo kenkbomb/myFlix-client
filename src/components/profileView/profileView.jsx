@@ -16,10 +16,10 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
     const [favs,setFavs] = useState(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
     const [f,s] = useState(0);
     const [selectedMovie,setSelectedMovie] = useState(null);
-    const [delBn,setDelbn] = useState();//the actual button
-    const [lockbn,setLockbtn] = useState('unlock');
+    //const [delBn,setDelbn] = useState();//the actual button
+    const [lockbn,setLockbtn] = useState('click to unlock the delete user button');
     const lockbtn = useRef();//the switch
-    const delBtn = useRef();
+    const delBtn = useRef();//the actual button 
     
     //------------------------------------------------------------------------------------------------------
       //below the useEffect that handles the favorites list...
@@ -114,7 +114,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
 return (
         <>
         <Col style={{marginTop:'2vw'}}>
-            <Button title='click to edit the user profile' className="button"  onClick={()=>{toggleShow(!show)}}>{show? 'Close Form':'Edit Profile'}</Button>
+            <Button title='click to edit the user profile' className="button" id='editbtn'  onClick={()=>{toggleShow(!show)}}>{show? 'Close Form':'Edit Profile'}</Button>
         {show && <Form>
         <h2>{userData.Username}</h2>
         <Form.Group controlId="formUserName">
@@ -145,16 +145,16 @@ return (
           if(delBtn.current.disabled)
           {
           delBtn.current.disabled=false;
-          //lockbtn.label='lock';
+          
           setLockbtn('click to lock the delete user button');
-          //setDelbn(delBn.disabled=false);
+          
           }
-          else{//delBtn.disabled=true;
-             // lockbtn.label='unlock';
+          else{
+           
               setLockbtn('click to unlock the delete user button');
-              //setDelbn(style={display:'none'})
+             
               delBtn.current.disabled = true;
-              //setDelbn(className='hide');
+              
           }
        // alert('delete button is disabled?'+' '+delBtn.disabled+' '+lockbtn.label);
         }}>

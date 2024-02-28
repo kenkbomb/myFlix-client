@@ -3,7 +3,7 @@ $color: steelblue;
 *{
   display:block;
   box-sizing: border-box;
-  font-size: clamp(1.4vw,1rem,1.8vw);
+  font-size: clamp(0.8rem,1rem,1.5rem);
 }
 
 .my-flix {
@@ -31,6 +31,9 @@ $color: steelblue;
 .button{
   margin-top: 2vw;
   margin-bottom: 5px;
+}
+#editbtn{
+  margin-left: 7.4vw;
 }
 .searchInput{
   margin-top: 1vw;
@@ -82,7 +85,7 @@ $color: steelblue;
   border:1px solid;
   margin-right: 5vw;
   text-align: left;
-  background-color:rgb(248, 184, 100);//#fa921b
+  background-color:rgb(241, 208, 164);//#fa921b
   //padding-left: 3vw;
   border-radius: 10px;
 }

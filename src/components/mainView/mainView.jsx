@@ -36,7 +36,7 @@ export const MainView = () =>
   const [buttonSearch,setButtonSearch] = useState(false);//a toggle bool to help with search logic...
   const [searchButtonText,setSearchButtonText] = useState('Search');//the text of the search button...
  //----------------------------------------------------------------------------------------------------
-  const [topFavs,setTopFavs] = useState(movies);
+  //const [topFavs,setTopFavs] = useState(movies);
   //--------------------------------------------------------------------------------------------------------------
   function doLogout()
   {
@@ -198,7 +198,9 @@ return (
 {/*-----------------------------------------------------------------------------------------------*/}
         <Route path="/" element = {
           <>
-              <HomeView></HomeView>
+              {/*<HomeView></HomeView>*/}
+
+              {<Navigate to = '/movies'/>}
               
           </>
         }></Route>
@@ -267,7 +269,7 @@ return (
           </Col>
           <Col></Col>
         </Row>
-        </div>): (<MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)} user={user} token={token} topFavs={topFavs} />)
+        </div>): (<MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)} user={user} token={token}  />)
     }
     
     </>

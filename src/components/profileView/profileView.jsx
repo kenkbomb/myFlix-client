@@ -7,7 +7,7 @@ import { MovieView } from "../movieView/movieView";
 
 export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
 {
-    const [username, setUsername] = useState("");
+   // const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
@@ -73,7 +73,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
         event.preventDefault();
 
         const data = {
-            Username: username,
+            Username: userData.Username,
             Password: password,
             Email: email,
             Birthday: birthday
@@ -116,11 +116,11 @@ return (
         <Col style={{marginTop:'2vw'}}>
             <Button title='click to edit the user profile' className="button" id='editbtn'  onClick={()=>{toggleShow(!show)}}>{show? 'Close Form':'Edit Profile'}</Button>
         {show && <Form>
-        <h2>{userData.Username}</h2>
+       {/* <h2>{userData.Username}</h2>
         <Form.Group controlId="formUserName">
         <Form.Label>Username: </Form.Label>
         <Form.Control type = 'text' value={username} onChange={(e)=>setUsername(e.target.value)} required minLength='3'></Form.Control>
-        </Form.Group>
+        </Form.Group>*/}
       
         <Form.Group controlId="formPassword">
         <Form.Label>Password: </Form.Label>

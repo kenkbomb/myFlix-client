@@ -13204,7 +13204,7 @@ textarea.form-control-lg {
 
 * {
   box-sizing: border-box;
-  font-size: clamp(1.4vw, 1rem, 1.8vw);
+  font-size: 1rem;
   display: block;
 }
 
@@ -13233,6 +13233,10 @@ textarea.form-control-lg {
 .button {
   margin-top: 2vw;
   margin-bottom: 5px;
+}
+
+#editbtn {
+  margin-left: 7.4vw;
 }
 
 .searchInput {
@@ -13286,7 +13290,7 @@ textarea.form-control-lg {
 
 .movieDetails {
   text-align: left;
-  background-color: #f8b864;
+  background-color: #f1d0a4;
   border: 1px solid;
   border-radius: 10px;
   margin-right: 5vw;

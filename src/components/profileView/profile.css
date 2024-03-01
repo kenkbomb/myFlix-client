@@ -5,7 +5,3 @@ ul,li{
 .hide{
     display: none;
 }
-.profileView{
-    display:flex;
-    flex-direction: column;
-}

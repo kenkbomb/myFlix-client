@@ -48,27 +48,27 @@ export const SignupView = ({gotoLogin}) => {
     return (
 
       <Form onSubmit={handleSubmit} className="loginForm">
-        <Form.Label>REGISTER...</Form.Label>
+        <Form.Label style={{marginLeft:'20vw',marginTop:'5vw'}}>Please Fill Out The Form To REGISTER...</Form.Label>
         <Form.Group controlId="formUserName">
-        <Form.Label>Username: </Form.Label>
-        <Form.Control type = 'text' value={username} onChange={(e)=>setUsername(e.target.value)} required minLength='3'></Form.Control>
+        <Form.Label style={{marginLeft:'20vw'}}>Username: </Form.Label>
+        <Form.Control className="m-auto w-50" type = 'text' value={username} onChange={(e)=>setUsername(e.target.value)} required minLength='3'></Form.Control>
         </Form.Group>
       
         <Form.Group controlId="formPassword">
-        <Form.Label>Password: </Form.Label>
-        <Form.Control type = 'password' value={password} onChange={(e)=>setPassword(e.target.value)} required minLength='3'></Form.Control>
+        <Form.Label style={{marginLeft:'20vw'}}>Password: </Form.Label>
+        <Form.Control className="m-auto w-50" type = 'password' value={password} onChange={(e)=>setPassword(e.target.value)} required minLength='3'></Form.Control>
         </Form.Group>
 
         <Form.Group controlId="formEmail">
-        <Form.Label>Email: </Form.Label>
-        <Form.Control type = 'email' value={email} onChange={(e)=>setEmail(e.target.value)} required ></Form.Control>
+        <Form.Label style={{marginLeft:'20vw'}}>Email: </Form.Label>
+        <Form.Control className="m-auto w-50" type = 'email' value={email} onChange={(e)=>setEmail(e.target.value)} required ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="formBirthday">
-        <Form.Label>Birthday: </Form.Label>
-        <Form.Control type = 'date' value={birthday} onChange={(e)=>setBirthday(e.target.value)} required></Form.Control>
+        <Form.Group  controlId="formBirthday">
+        <Form.Label style={{marginLeft:'20vw'}}>Birthday: </Form.Label>
+        <Form.Control className="m-auto w-50" type = 'date' value={birthday} onChange={(e)=>setBirthday(e.target.value)} required></Form.Control>
         </Form.Group>
-        <Button type = 'submit' className="button">Submit</Button>
+        <Button type = 'submit' style={{backgroundColor:'#d13028',marginLeft:'20vw',border:'none'}} className="button">Submit</Button>
       </Form>
 
         

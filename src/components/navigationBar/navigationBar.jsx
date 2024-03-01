@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
     return(
-        <Navbar bg="primary" expand="sm" fixed="top" > 
+        <Navbar bg='danger' expand="sm" fixed="top" variant="light" > 
             <Container className='nav'>
-                {user?(<Navbar.Brand as={Link} to="/movies">
-                    MyMovies
+                {user?(<Navbar.Brand as={Link} to="/movies" className="navBrand">
+                     MyMovies
                 </Navbar.Brand>):<Navbar.Brand as={Link} to="/login">
                     MyMovies
                 </Navbar.Brand>}
@@ -18,7 +18,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                                 <Nav.Link as={Link} to="/login">
                                     Login
                                 </Nav.Link>
-                                <Nav.Link as={Link} to="/signup">
+                                <Nav.Link  as={Link} to="/signup">
                                     Signup
                                 </Nav.Link>
                             </>

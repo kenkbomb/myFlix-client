@@ -191,7 +191,7 @@ return (
                     localStorage.removeItem('user');
                 }}
         />
-      <Routes >
+      <Routes>
 {/*-----------------------------------------------------------------------------------------------*/}
         <Route path="/" element = {
           <>
@@ -235,34 +235,36 @@ return (
       <>
       {!selectedMovie?(
         
-          <div style={{border:'2px solid #c3ecfa',borderRadius:'10px',marginTop:'5vw',backgroundColor:'cornflowerblue'}}>
+          <div style={{backgroundColor:'rgb(31, 30, 30)'}}>
            
-          <Row >
-            <Col></Col>
-            <Col style={{textAlign:'center',border:'1px solid #c3ecfa',backgroundColor:'whitesmoke'}}>
+          <Row>
+            
+            <Col style={{marginTop:'50px',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
         <Form.Group controlId="search">
-        <Form.Control className="searchInput" type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
+        <Form.Control className="w-50 m-auto"   type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
         </Form.Group>
-        <Button className="button" type = 'submit' onClick={doSearch}>{searchButtonText}</Button>
+        <Button style={{backgroundColor:'#d13028',border:'none'}} className="button" title="search via genre" type = 'submit' onClick={doSearch}>{searchButtonText}</Button>
+          </Col>
+          </Row>
 
-            <h1>MyMOVIES</h1>
+            <h3 style={{textAlign:'center',color:'red'}}>MyMOVIES</h3>
+            <section style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center',margin:'5px'}}>
           {movies.map((movie) => {
             return (
-              <div>
+              
             <MovieCard className='card'
             key = {movie.id} 
             movieData = {movie}
             onMovieClick = {(newSelectedMovie)=>{
                 setSelectedMovie(newSelectedMovie);
-              
-            }} />
-            </div>
+              }} />
+            
             );
           })}{/*end of movies map*/}
+          </section>
+         {/* </Col>
           
-          </Col>
-          <Col></Col>
-        </Row>
+        </Row>*/}
         </div>): (<MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)} user={user} token={token}  />)
     }
     

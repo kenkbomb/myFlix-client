@@ -45,21 +45,22 @@ export const LoginView = ({onLoggedIn}) =>
     };
 //---------------------------------------------------------------------------------------------------
     return (
-
-        <Form style={{marginTop:'5vw', position:'sticky',top:'25px'}} onSubmit={handleSubmit}>
+        <div>
+        <Form style={{marginTop:'5vw', position:'sticky',top:'25px',backgroundColor:'rgb(31,30,30',}} onSubmit={handleSubmit}>
 
             <Form.Group controlId="formUsername">
-                <Form.Label>LOGIN...</Form.Label><br></br>
-                <Form.Label>Username: </Form.Label>
-                <Form.Control type = 'text' value={username} onChange={(e)=>setUsername(e.target.value)} required minLength='3'/>
+                <Form.Label style={{marginLeft:'20vw'}}>LOGIN...</Form.Label><br></br>
+                <Form.Label style={{marginLeft:'20vw'}}>Username: </Form.Label>
+                <Form.Control className="w-50 m-auto" type = 'text' value={username} onChange={(e)=>setUsername(e.target.value)} required minLength='3'/>
             </Form.Group>
             <Form.Group controlId="formPassword">
-                <Form.Label>Password: </Form.Label>
-                <Form.Control type = 'password' value={password} onChange={(e)=>setPassword(e.target.value)} required/>
+                <Form.Label style={{marginLeft:'20vw'}}>Password: </Form.Label>
+                <Form.Control className="w-50 m-auto" type = 'password' value={password} onChange={(e)=>setPassword(e.target.value)} required/>
+                <Button className="button" style={{backgroundColor:'#d13028',marginLeft:'20vw',border:'none'}}  variant = 'primary' type = 'submit'>Login</Button>
             </Form.Group>
-            <Button className="button" variant = 'primary' type = 'submit'>Login</Button>
+            
         </Form>
-
+</div>
        
     );
 };

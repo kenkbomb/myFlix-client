@@ -34,12 +34,12 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
 
 
     return (//this is the main movie view component, which displays all of the movies data/info
-    <Col >
+    <Col>
     { user?
-    <div className="cardBack" style={{marginTop:'5vw'}}> 
-        <div className="movieDetails" style={{display:'flex',flexDirection:'row'}}>
+    <div className="cardBack" style={{marginTop:'8vw'}}> 
+        <div className="movieDetails" >
         <div >
-        <img className="pic" src = {movieData.imageURL} />
+        <img className="pic" style={{marginRight:'5px'}} src = {movieData.imageURL} />
         </div>
         <div className="movieText">
             <div>Title: {movieData.title}</div>
@@ -51,14 +51,14 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
         </div>
         </div>
        { user?
-        <Button style = {{margin:'5px'}} onClick={addFav}>Favorite</Button>
+        <Button style = {{margin:'5px',backgroundColor:'#d13028',border:'none'}} onClick={addFav}>Favorite</Button>
         :<div></div>
        }
-        <Button onClick={onBackClick} >Go Back</Button>
+        <Button onClick={onBackClick} style={{backgroundColor:'#d13028',border:'none'}}>Go Back</Button>
     </div>:
     <div className="cardBack"> 
-        <div className="movieDetails" style={{display:'flex',flexDirection:'row'}}>
-        <div> <img className="pic" src = {movieData.imageURL} /></div>
+        <div className="movieDetails" >
+        <div> <img className="picNoGrow" style={{marginRight:'5px'}} src = {movieData.imageURL} /></div>
         <div className="movieText">
 
             <div>Title: {movieData.title}</div>
@@ -70,10 +70,10 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
         </div>
         </div>
        { user?
-        <Button style = {{margin:'5px'}} onClick={addFav}>Favorite</Button>
+        <Button className="button" style = {{margin:'5px'}} onClick={addFav}>Favorite</Button>
         :<div></div>
        }
-        <Button className="button" onClick={onBackClick} >Go Back</Button>
+        <Button className="button" style={{backgroundColor:'#d13028',border:'none'}}  onClick={onBackClick} >Go Back</Button>
     </div>
 }
     </Col>

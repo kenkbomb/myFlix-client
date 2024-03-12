@@ -1,5 +1,199 @@
+@import '~bootstrap/scss/bootstrap.scss';
 $color: steelblue;
-
+$red:#d13028;
+$darksmoke:#4d4f4d;
+*{
+  display:block;
+  box-sizing: border-box;
+  font-size: clamp(0.8rem,1rem,1.5rem);
+ // background-color:rgb(31, 30, 30) ;
+ padding: 0;
+}
+body{
+  background-color:rgb(31, 30, 30);
+}
+.profileViewTop{
+  background-color:rgb(31, 30, 30);
+}
+.test:hover{
+  transform: scale(1.06);
+  transition: 1s;
+  border-radius: 20px;
+}
+.test{
+  transition: 0.5s;
+}
+.navBrand{
+  margin-left: 5px;
+}
 .my-flix {
   color: $color;
+}
+.favsList{
+  width:100%;
+  //margin-left: 1vw;
+  display: flex;
+  flex-direction: column;
+  //justify-content: center;
+  //align-content: center;
+  //background-color: teal;
+  border: 1px solid;
+}
+
+.favs{
+  width:100%;
+  //margin-left:7vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+  
+}
+
+.center{
+  width:100%;
+  margin: 0 auto;
+}
+button,.button,Button{
+  margin-top: 2vw;
+  margin-bottom: 5px;
+  background-color: $red;
+}
+#editbtn{
+  margin-left: 7.4vw;
+  margin-top: 40px;
+  background-color: $red;
+  border:none
+}
+#subbut,  #delbut,#delbut:disabled{
+  background-color: $red;
+  border:none;
+}
+.form.label,label{
+  color:whitesmoke;
+}
+.searchInput,.search{
+  margin-top: 1vw;
+  color: #c3ecfa;
+  width:75%;
+}
+.profileView{
+  display:flex;
+  flex-direction: column;
+  background-color:'#4d4f4d' ;
+  border-radius: 5px;
+  //border: 1px solid #c3ecfa ;
+  width: 85%;
+  margin-left: 7vw;
+}
+.card{
+  transition: 1s;
+}
+.card:hover{
+  background-color:rgb(238, 80, 17);
+  transition: 1s;
+  transform:scale(1.1);
+  z-index: 1000;
+}
+.loginForm{
+  margin-top: 5vw;
+  box-sizing: border-box;
+  background-color:rgb(31, 30, 30) ;
+}
+.nav{
+  //background-color: $red;
+  display: inline-block;
+  box-sizing: border-box;
+ 
+ // backdrop-filter: blur(8px);
+  //color: ;
+}
+.confirmUpdate{
+  display:flex;
+  flex-direction: row;
+}
+.picNoGrow{
+  //transition: 1s;
+  width:17vw;
+  height: 20vw;
+  float: left;
+}
+//.picNoGrow:hover{
+  //transform: scale(1.2);
+  //transition: 1s;
+  //border-radius: 10px;
+  //border:3pc solid rgba(137, 139, 141, 0.342);
+  //backdrop-filter: blur(4px);
+//}
+.pic{
+  width:17vw;
+  height: 20vw;
+  background-color: black;
+  transition: 0.5s;
+  min-width: 200px;
+  min-height: 150px;
+  float: left;
+  margin: 2px;
+  
+}
+.pic:hover{
+  transform: scale(1.03);
+  transition: 1s;
+  border-radius: 10px;
+ // transform: translate(30px,30px);
+ z-index: 1000;
+ background-color: $red;
+ border: 2px solid $red;
+}
+.movieDetails{
+  border:1px solid;
+  margin-right: 5vw;
+  text-align: left;
+  background-color:$darksmoke;//#fa921b
+  //padding-left: 3vw;
+  border-radius: 10px;
+  padding-bottom: 5vw;
+  //height: 20vw;
+  min-height: 150px;
+  max-height: fit-content;
+  //min-height: fit-content;
+}
+.cardBack{
+  text-align: center;
+  border:2px solid;
+  
+  width:'100%';
+  background-color: rgb(31, 30, 30);
+  min-height: fit-content;
+}
+.movieText{
+  padding-left: 1vw;
+  color:whitesmoke;
+  margin-left: 5px;
+
+}
+.hide{
+  display: none;
+}
+.editForm{
+  margin-left: 7vw;
+  margin-right: 7vw;
+}
+.mCardImg{
+  height:25vw;
+  width: 45vw;
+}
+.mCard{
+  min-width:10vw;
+}
+.moviesViewSect{
+  background-color: black;
+  border: 1px solid;
+}
+
+@media only screen and (max-width:600px) {
+  .moviesViewSect,.favsList{
+    flex-direction: column;
+  }
 }

@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { Form } from "react-bootstrap";
+import {Button} from "react-bootstrap";
 
 export const LoginView = ({onLoggedIn}) =>
 {
@@ -13,7 +15,6 @@ export const LoginView = ({onLoggedIn}) =>
         Password:password
     };
     
-    //alert('submit test');
 //-------------------------------------------------------------------------------------------------
     fetch('https://myflixdb-162c62e51cf6.herokuapp.com/login',
     //fetch('127.0.0.1:8080/login',
@@ -24,17 +25,17 @@ export const LoginView = ({onLoggedIn}) =>
     }).then((response)=>response.json())
     .then((data)=>
     {
-
-        alert('login response: '+ data.user);
-       // alert(data.Username);
         if (data.user) 
             {
+                alert('Welcome  '+ data.user.Username + '!');
                 localStorage.setItem('user',JSON.stringify(data.user));
                 localStorage.setItem('token',data.token);
              onLoggedIn(data.user, data.token);
-            } else 
+            } 
+            else 
           {
-            alert("No such user " + data.user);
+            alert("No such user " + data.Username);
+            console.log(data);
           }
     })
         .catch((e) => {
@@ -44,15 +45,22 @@ export const LoginView = ({onLoggedIn}) =>
     };
 //---------------------------------------------------------------------------------------------------
     return (
-        <form onSubmit={handleSubmit}>
-            <label>LOGIN...</label><br></br>
-            <label>Username: 
-            <input type = 'text' value = {username} onChange={(e) => setUsername(e.target.value)} required></input>
-            </label><br></br>
-            <label>Password: 
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
-            </label><br></br>
-            <button type="submit">SUBMIT</button>
-        </form>
+        <div>
+        <Form style={{marginTop:'5vw', position:'sticky',top:'25px',backgroundColor:'rgb(31,30,30',}} onSubmit={handleSubmit}>
+
+            <Form.Group controlId="formUsername">
+                <Form.Label style={{marginLeft:'20vw'}}>LOGIN...</Form.Label><br></br>
+                <Form.Label style={{marginLeft:'20vw'}}>Username: </Form.Label>
+                <Form.Control className="w-50 m-auto" type = 'text' value={username} onChange={(e)=>setUsername(e.target.value)} required minLength='3'/>
+            </Form.Group>
+            <Form.Group controlId="formPassword">
+                <Form.Label style={{marginLeft:'20vw'}}>Password: </Form.Label>
+                <Form.Control className="w-50 m-auto" type = 'password' value={password} onChange={(e)=>setPassword(e.target.value)} required/>
+                <Button className="button" style={{backgroundColor:'#d13028',marginLeft:'20vw',border:'none'}}  variant = 'primary' type = 'submit'>Login</Button>
+            </Form.Group>
+            
+        </Form>
+</div>
+       
     );
-};//}
+};

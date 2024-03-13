@@ -180,7 +180,7 @@ return (
                 return(
                 <><div className="test" style={{border:'2px solid white',margin:'5px',borderRadius:'5px'}}>
                   <MovieCard className = 'picNoGrow' movieData={movie} onMovieClick ={(movie)=>{setSelectedMovie(movie)}} />
-                  <div title="click to remove from favorites" style={{border:'1px solid', textAlign:'center',width:'2vw',height:'2vw', display:'inline-block',float:'right',borderRadius:'5px',minWidth:'25px',minHeight:'25px', backgroundColor:'#d13028'}} onClick={()=>{removeFav(movie)}}>X</div></div>
+                  <div className="removeBtn" title="click to remove from favorites" style={{border:'1px solid', textAlign:'center',width:'2vw',height:'2vw', display:'inline-block',float:'right',borderRadius:'5px',minWidth:'25px',minHeight:'25px', backgroundColor:'#d13028'}} onClick={()=>{removeFav(movie)}}>X</div></div>
                 </>
                 )
             })}</div>:<MovieView className='picNoGrow' movieData={selectedMovie} onBackClick={()=>{setSelectedMovie(null)}} />}

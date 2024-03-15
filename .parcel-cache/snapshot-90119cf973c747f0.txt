@@ -1,4 +1,4 @@
-9709
+9708
 136C:\Users\kenPl\Documents\careerfoundry\myFlix-client\node_modules\@parcel\bundler-default\node_modules\@parcel\graph\lib\ContentGraph.js133547925690331548 0
 100C:\Users\kenPl\Documents\careerfoundry\myFlix-client\node_modules\dom-helpers\nextUntil\package.json133547376153736409 0
 67C:\Users\kenPl\Documents\careerfoundry\myFlix-client\.gitattributes133491497594271424 0
@@ -12,7 +12,7 @@
 82C:\Users\kenPl\Documents\careerfoundry\myFlix-client\node_modules\type-fest\source133547389439151456 1
 110C:\Users\kenPl\Documents\careerfoundry\myFlix-client\node_modules\css-tree\cjs\syntax\node\GeneralEnclosed.cjs133547389440171547 0
 126C:\Users\kenPl\Documents\careerfoundry\myFlix-client\node_modules\parcel\node_modules\@parcel\core\src\requests\PathRequest.js133547925702142516 0
-65C:\Users\kenPl\Documents\careerfoundry\myFlix-client\package.json133549700454275118 0
+65C:\Users\kenPl\Documents\careerfoundry\myFlix-client\package.json133549710433766842 0
 102C:\Users\kenPl\Documents\careerfoundry\myFlix-client\node_modules\@restart\hooks\esm\useRafInterval.js133547376146165796 0
 101C:\Users\kenPl\Documents\careerfoundry\myFlix-client\node_modules\css-tree\cjs\syntax\scope\value.cjs133547389450258611 0
 96C:\Users\kenPl\Documents\careerfoundry\myFlix-client\node_modules\react-bootstrap\esm\NavItem.js133547376165031264 0
@@ -9706,5 +9706,4 @@
 76C:\Users\kenPl\Documents\careerfoundry\myFlix-client\dist\index.ce1d6491.css133547926192076481 0
 88C:\Users\kenPl\Documents\careerfoundry\myFlix-client\dist\index.ce1d6491.css.map.3744.1k133493422109889417 0
 68C:\Users\kenPl\Documents\careerfoundry\myFlix-client\dist\index.html133547926192066492 0
-69C:\Users\kenPl\Documents\careerfoundry\myFlix-client\ignore.gitignore133549700454195106 0
-70C:\Users\kenPl\Documents\careerfoundry\myFlix-client\package-lock.json133549700454245118 0
+70C:\Users\kenPl\Documents\careerfoundry\myFlix-client\package-lock.json133549710433746846 0

@@ -239,7 +239,7 @@ return (
            
           <Row>
             
-            <Col style={{marginTop:'5vw',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
+            <Col style={{marginTop:'50px',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
         <Form.Group controlId="search">
         <Form.Control className="w-50 m-auto"   type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
         </Form.Group>

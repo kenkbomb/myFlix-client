@@ -27500,7 +27500,7 @@ const MainView = ()=>{
                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
                                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                                 style: {
-                                                    marginTop: "5vw",
+                                                    marginTop: "50px",
                                                     textAlign: "center",
                                                     borderRadius: "10px",
                                                     marginBottom: "10px"

@@ -13262,12 +13262,6 @@ button, .button, Button {
   color: #f5f5f5;
 }
 
-.searchInput, .search {
-  color: #c3ecfa;
-  width: 75%;
-  margin-top: 1vw;
-}
-
 .profileView {
   background-color: "#4d4f4d";
   border-radius: 5px;

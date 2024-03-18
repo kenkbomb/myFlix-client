@@ -7,7 +7,7 @@ import { LoginView } from "../LoginView/LoginView";
 import { SignupView } from "../signupView/SignupView";
 import { NavigationBar } from "../navigationBar/navigationBar";
 import { ProfileView } from "../profileView/profileView";
-import { HomeView } from "../homeView/HomeView";
+
 
 import { Col, Container,Button,Row,Form } from "react-bootstrap";
 

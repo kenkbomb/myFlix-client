@@ -25,7 +25,7 @@ export const LoginView = ({onLoggedIn}) =>
     }).then((response)=>response.json())
     .then((data)=>
     {
-        if (data.user) 
+        if (data.user) //user has logged in successfully
             {
                 alert('Welcome  '+ data.user.Username + '!');
                 localStorage.setItem('user',JSON.stringify(data.user));

@@ -7,16 +7,12 @@ import { LoginView } from "../LoginView/LoginView";
 import { SignupView } from "../signupView/SignupView";
 import { NavigationBar } from "../navigationBar/navigationBar";
 import { ProfileView } from "../profileView/profileView";
-
-
-import { Col, Container,Button,Row,Form } from "react-bootstrap";
-
+import { Col, Container,Button,Form,Row,Form } from "react-bootstrap";
 import { BrowserRouter,Route,Routes,Navigate } from "react-router-dom";//for routing
 import '../../index.scss';//remove?
-
-
 let matches = [];
 let moviesFromApi = [];
+
 
 //---------------------------------------------------------------------------------------------------------------
 export const MainView = () =>
@@ -34,7 +30,11 @@ export const MainView = () =>
   const [match,setMatch] = useState([]);
   //search button vars---------------------------------------------
   const [buttonSearch,setButtonSearch] = useState(false);//a toggle bool to help with search logic...
-  const [searchButtonText,setSearchButtonText] = useState('Search');//the text of the search button...
+  const [searchButtonText,setSearchButtonText] = useState('Search by Genre');//the text of the search button...
+  const [fav,setFav] = useState(false);
+  const [f,s] = useState(0);
+  const [vertPos,setVertPos] = useState(0);
+  //const navigate = useNavigate();
  //----------------------------------------------------------------------------------------------------
   //const [topFavs,setTopFavs] = useState(movies);
   //--------------------------------------------------------------------------------------------------------------
@@ -44,50 +44,62 @@ export const MainView = () =>
     setToken(null); 
     localStorage.clear();
     //console.log('go back to login page');
-    <Navigate to = '/logout'/>;
+    //<Navigate to = '/login'/>;
     //console.log("test");
     alert('Returning to Login');
-
+    //navigate('login');
   }//------------------------------------------------------------------------------------------------------------
   function gotoLogin()
   {
     alert('Please Login');
-    <Navigate to ={'/login'}/>;//not going to work, overriden at the markup section via conditional rendering...
+    navigate('login');
     
   }
+function onBackClick()
+{
+  setSelectedMovie(null);
+  s(f+1);
+  console.log(f);
+  
+}
+  
+  useEffect(()=>
+    {
+      //if(!user){return;}//if there is no user, end this function...
+  
+      fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+user.Username,
+      {headers:{Authorization: `Bearer ${token}`}})
+          .then((response)=>response.json())
+          .then((data)=>{
+            setUser(data);
+            //setFavs(moviesData.filter(m => data.Favorites.includes(m._id)));
+          })},[f]);
+  
   //--------------------------------------------------------------------------------------------------------------
-  //Below, the 'search' function logic...
+  //Below, the 'search by genre' function logic...
   //---------------------------------------------------------------------------------------------------------------
   const doSearch =() =>
   {
     if(search==='')
       {
-        setSearchButtonText('Search');
+        setSearchButtonText('Search by Genre');
       }
-      else{setSearchButtonText('Back')}
+      else{setSearchButtonText('Show All')}
 
     setMovies(moviesFromApi);
 
      matches= movies.filter((m)=>{ return m.genre.toLowerCase().includes(search.toLowerCase())});
 
-    
+    s(f+1);//force update
    if(search ===''||matches.length===0&&movies.length===moviesFromApi.length)//clean but empty search, no match
    {
-    alert('no matches found for '+search+ ', please rephrase...');
-   // console.log('no matches found! ' + matches.length);
-    //console.log(JSON.stringify(moviesFromApi) + ' from moviesFromApi');
-    
-    setSearchButtonText('Search');
+    alert('no matches found for '+search+ ', please rephrase as thriller, action, drama, noir, horror, comedy...');
+    setSearchButtonText('Search by Genre');
   }
    if(search!=''&& movies.length===moviesFromApi.length)//first clean search...
    {
-      //console.log('this is the search result: ' + JSON.stringify(matches));
-      //console.log(matches.length + ' test match length');
-      //console.log(movies);
-      
       setMatch(JSON.stringify(matches));
       setMatch(match.map((movie)=>{console.log(movie.title)}));
-      //console.log(matches.length);
       setMovies(moviesFromApi);
     }
     if(search!=''&&movies.length<moviesFromApi.length)//dirty search...
@@ -95,11 +107,11 @@ export const MainView = () =>
       alert('back to full list');
       
       setSearch('');
-      setSearchButtonText('Search');
+      setSearchButtonText('Search by Genre');
     }
     if(matches.length!=0&&matches.length!=11)
     {
-     // console.log('reset search jank');
+     //do nothing...
     }
     setButtonSearch(!buttonSearch);
   }
@@ -127,13 +139,6 @@ const deleteUser = () =>
     });
 }
 //-----------------------------------------------------------------------------------------------------------------
-
-
-//-----------------------------------------------------------------------------------------------------------------
- 
-//------------------------------------------------------------------------------------------------------------
-
-
 //------------------------------------------------------------------------------------------------------------
     useEffect(()=>
     {
@@ -160,7 +165,9 @@ const deleteUser = () =>
                 
               };
           });
-        
+          //----------------------------------------------------------------------------------------------------
+          
+            //---------------------------------------------------------------------------------------------------
           if(search==='')
           {
            // console.log('match length is ' + matches.length);
@@ -173,7 +180,7 @@ const deleteUser = () =>
           }
         });
 
-    },[token,match,buttonSearch,user]);//empty dependancy array is the same as using an 'onMount',which means only call/do once...
+    },[token,match,buttonSearch,user,f]);//empty dependancy array is the same as using an 'onMount',which means only call/do once...
 
     /*Notice that you’ll need to add token to the second argument of useEffect(). This is known as the dependency array, and it ensures fetch is called every time token changes (for example, after the user logs in). An if statement has also been added to check for token, as there’s no reason to execute the fetch call if there’s no token yet.*/
 //-------------------------------------------------------------------------------------------------------------
@@ -190,12 +197,14 @@ return (
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
                 }}
+                update={onBackClick}
+                
         />
       <Routes>
 {/*-----------------------------------------------------------------------------------------------*/}
         <Route path="/" element = {
           <>
-             {user?(<Navigate to = '/movies'/>):<Navigate to = '/login'/>}
+             {user?(<Navigate to = '/movies' onClick={()=>{s(f+1)}}/>):<Navigate to = '/login'/>}
           </>
         }></Route>
         
@@ -218,14 +227,15 @@ return (
 {/*------------------------------------------------------------------------------------------------*/}
     <Route path = '/signUp'  element = {
       <>
-          {user?(<Navigate to='/'/>):(<SignupView gotoLogin={gotoLogin} />)}
+          {user?(<Navigate to='/'/>):(<SignupView   />)}
+          
       </>
     }
   />
 {/*------------------------------------------------------------------------------------------*/}
     <Route style={{border:'2px solid black',marginTop:'10vw'}} path = '/profile' element = {
       <>
-        {!user?(<Navigate to = '/signup'/>):(<ProfileView userData={user} moviesData={movies} deleteMe={deleteUser} token={token} setUser={setUser} logout={doLogout} />)}
+        {!user?(<Navigate to = '/signup'/>):(<ProfileView userData={user} moviesData={moviesFromApi} deleteMe={deleteUser} token={token} setUser={setUser} logout={doLogout} f={f} s={s} />)}
       </>
     }/>
 {/*-------------------------------------------------------------------------------------------*/}
@@ -241,41 +251,43 @@ return (
             
             <Col style={{marginTop:'50px',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
         <Form.Group controlId="search">
-        <Form.Control className="w-50 m-auto"   type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
+        <Form.Control className="w-50 m-auto"  type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
         </Form.Group>
-        <Button style={{backgroundColor:'#d13028',border:'none'}} className="button" title="search via genre" type = 'submit' onClick={doSearch}>{searchButtonText}</Button>
+        
+        <Button style={{backgroundColor:'#d13028',border:'none'}} className="button" title="thriller, comedy, action,drama, noir, horror" type = 'submit' onClick={doSearch}>{searchButtonText}</Button>
           </Col>
           </Row>
 
             <h3 style={{textAlign:'center',color:'red'}}>MyMOVIES</h3>
             <section style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center',margin:'5px'}}>
-          {movies.map((movie) => {
+              
+          {
+          
+          movies.map((movie) => {
+            
+
             return (
               
-            <MovieCard className='card'
-            key = {movie.id} 
-            movieData = {movie}
-            onMovieClick = {(newSelectedMovie)=>{
-                setSelectedMovie(newSelectedMovie);
-              }} />
+            <
+              MovieCard className='card'
+              key = {movie.id} 
+              movieData = {movie}
+              userData={user}
+              onMovieClick = {(newSelectedMovie)=>{setSelectedMovie(newSelectedMovie);}} 
+            />
             
             );
           })}{/*end of movies map*/}
           </section>
-         {/* </Col>
-          
-        </Row>*/}
-        </div>): (<MovieView movieData = {selectedMovie} onBackClick = {()=>setSelectedMovie(null)} user={user} token={token}  />)
+         
+        </div>): (<MovieView movieData = {selectedMovie} onBackClick = {onBackClick} user={user} token={token}  />)
     }
     
     </>
     }/>
 
         </Routes>
-</Container>
-        </BrowserRouter>
+          </Container>
+            </BrowserRouter>
   )
-     
-  
-
-};
+     };

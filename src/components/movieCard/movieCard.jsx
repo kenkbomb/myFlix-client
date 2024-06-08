@@ -1,23 +1,43 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Card, CardImg } from "react-bootstrap";
+import { useState,useEffect } from "react";
+import { BsSuitHeartFill } from "react-icons/bs";
 
-export const MovieCard = ({movieData,onMovieClick}) =>
+export const MovieCard = ({movieData,onMovieClick,userData}) =>
 {
+   // const [movie,setMovies] = useState(movieData);
+    const [faved,setFaved] = useState(false);
+    const [user,setUser] = useState(userData);
+    const [picType,setPicType] = useState('pic');
+
+  
+    function getFavs(movie)
+    {
+userData.Favorites.forEach(element => {
+    if(movie._id===element)
+        {
+            //alert(movie.title + " is a fav!");
+            setFaved(true);
+            setPicType("favedPic");
+        }
+    
+});
+
+      
+    }
+
+    useEffect(()=>
+        {   
+            setUser(userData);
+            
+            getFavs(movieData);
+        },[userData,faved])
     return (
     <>
-       {/* <div title={movieData.tagline} style={{className:'card',display:'inline-block', cursor:"pointer",backgroundColor:'#fa921b',marginBottom:'5px', border:'1px solid',textAlign:'center',width:'80%'}} onClick={()=>{onMovieClick(movieData)}}>{movieData.title}
-        </div>*/}
-        
-        {/*<Card className="mCard" title={movieData.title + ' ' + '['+movieData.tagline+']'} onClick={()=>{onMovieClick(movieData)}}>
-        <Card.Img className="mCardImg" src={movieData.imageURL}/>
-        <Card.Body>
+       
+        <div className={picType} title={movieData.title + ' ' + '['+movieData.tagline+']'} onClick={()=>{onMovieClick(movieData)}} style={{display:'block', backgroundImage:`url(${movieData.imageURL})`, backgroundSize:'cover',backgroundRepeat:'no-repeat'}}>
             
-        </Card.Body>
-        </Card>
-    */}
-        <div>
-            <img style={{borderRadius:'5px'}} title={movieData.title + ' ' + '['+movieData.tagline+']'} onClick={()=>{onMovieClick(movieData)}} className="pic" src = {movieData.imageURL}></img>
+            {faved?  <BsSuitHeartFill style={{width:'3vw',height:'3vw',padding:'5px',fill:'red',border:'2px solid red', position:'relative',backgroundColor:'black',display:'inlineBlock',float:'right',boxSizing:'border-box',borderRadius:'50px',minWidth:'40px',marginLeft:'75%',minHeight:'40px'}} />:null}
         </div>
     
     </>)

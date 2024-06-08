@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useEffect,useRef } from "react";
 import { MovieCard } from "../movieCard/movieCard";
 import { MovieView } from "../movieView/movieView";
-
-export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
+import { useNavigate } from "react-router-dom";
+export const ProfileView = ({userData,moviesData,deleteMe,token,logout,f,s}) =>
 {
    // const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -14,12 +14,13 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
     const [show,toggleShow] = useState(false);
     const [theUserData,setTheUserData] = useState(userData);
     const [favs,setFavs] = useState(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
-    const [f,s] = useState(0);
+    //const [f,s] = useState(0);
     const [selectedMovie,setSelectedMovie] = useState(null);
     //const [delBn,setDelbn] = useState();//the actual button
     const [lockbn,setLockbtn] = useState('click to unlock the delete user button');
     const lockbtn = useRef();//the switch
     const delBtn = useRef();//the actual button 
+    const navigate = useNavigate();
     
     //------------------------------------------------------------------------------------------------------
       //below the useEffect that handles the favorites list...
@@ -71,7 +72,11 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
     const updateUser =(event) =>
     {
         event.preventDefault();
-
+      if(password===""||email === ""||birthday==="")
+        {
+          alert("please fill out all fields");
+          return;
+        }
         const data = {
             Username: userData.Username,
             Password: password,
@@ -86,7 +91,7 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
         body:JSON.stringify(data)//the data object to be sent to update the users data/profile...
       }).then((response) => {
         if (response.ok) {
-          alert('user updated!'+ userData);
+          alert('user updated!   '+ userData.Username);
          
         localStorage.setItem('user',JSON.stringify(data));
         localStorage.setItem('token',data.token);
@@ -97,7 +102,8 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout}) =>
           s(f+1);//re-render the view...
           
           logout();// calls logout from mainview as a prop function, to go back to the login page after updating user...
-            return response.json();//return the response of the request...
+          navigate('/login'); 
+          return response.json();//return the response of the request...
             
         } else {
             alert("Failed to update" + response);
@@ -114,11 +120,7 @@ return (
         <Col className="profileViewTop">
             <Button title='click to edit the user profile' className="button" id='editbtn'  onClick={()=>{toggleShow(!show)}}>{show? 'Close Form':'Edit Profile'}</Button>
         {show && <Form className="editForm">
-       {/* <h2>{userData.Username}</h2>
-        <Form.Group controlId="formUserName">
-        <Form.Label>Username: </Form.Label>
-        <Form.Control type = 'text' value={username} onChange={(e)=>setUsername(e.target.value)} required minLength='3'></Form.Control>
-        </Form.Group>*/}
+       
       
         <Form.Group controlId="formPassword">
         <Form.Label>Password: </Form.Label>
@@ -173,17 +175,17 @@ return (
             
         <div className="favsList">
           
-            {favs.length>0?<h3 style={{textAlign:'center',textDecoration:'underLine',textTransform:'capitalize',color:'#d13028'}}>{userData.Username}'s Favorites </h3>:<h2>No Favorites!</h2>}
+            {favs.length>0?<h3 style={{textAlign:'center',textDecoration:'underLine',textTransform:'capitalize',color:'#d13028'}}>{userData.Username}'s Favorites </h3>:<h2 style={{color:'whitesmoke',margin:'0 auto'}}>Your Favorite movies will show up here!</h2>}
             {!selectedMovie?<div className='favs'>
             {favs.map((movie)=>
             {
                 return(
-                <><div className="test" style={{border:'2px solid white',margin:'5px',borderRadius:'5px'}}>
-                  <MovieCard className = 'picNoGrow' movieData={movie} onMovieClick ={(movie)=>{setSelectedMovie(movie)}} />
-                  <div className="removeBtn" title="click to remove from favorites" style={{border:'1px solid', textAlign:'center',width:'2vw',height:'2vw', display:'inline-block',float:'right',borderRadius:'5px',minWidth:'25px',minHeight:'25px', backgroundColor:'#d13028'}} onClick={()=>{removeFav(movie)}}>X</div></div>
+                <><div className="test" style={{ display:'flex',flexDirection:'column',border:'2px solid white',margin:'5px',borderRadius:'5px'}}>
+                  <MovieCard className = 'picNoGrow' movieData={movie} onMovieClick ={(movie)=>{setSelectedMovie(movie)}} userData={theUserData} isfaved={false} />
+                  <div className="removeBtn" title="click to remove from favorites" onClick={()=>{removeFav(movie)}}>REMOVE</div></div>
                 </>
-                )
-            })}</div>:<MovieView className='picNoGrow' movieData={selectedMovie} onBackClick={()=>{setSelectedMovie(null)}} />}
+                )//when viewing the movie from inside the profile view, image is static and can only go back...
+            })}</div>:<MovieView className='picNoGrow' user={theUserData} movieData={selectedMovie} onBackClick={()=>{setSelectedMovie(null)}} />}
         </div>
         
         </Col>

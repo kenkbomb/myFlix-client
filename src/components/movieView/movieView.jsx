@@ -1,17 +1,45 @@
 import React from "react";
 //import { MovieCard } from "../movieCard/movieCard";
 import { Col,Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Image from "react-bootstrap/Image";
 
 export const MovieView = ({movieData,onBackClick,user,token}) =>
 {
-    //const [isFaved,setIsFaved] = useState(topFavs);
+   
+    const [favbtnText,setfavbtnText] = useState("Favorite");
+    const [favMovies,setFavMovies] = useState(user.Favorites);
+    const [isfaved,setisfaved] = useState(false);
 //-------------------------------------------------------------------------------------------------------------
+    useEffect(()=>{
     
+            
+        if(user!=undefined){
+        setFavMovies(user.Favorites);
+        
+        console.log(favMovies);
+        console.log(movieData.title);
+        favMovies.forEach(element => {
+            if(element===movieData._id)
+                {
+                    setisfaved(true);
+                    console.log(isfaved);
+                    console.log(element + " " + movieData._id);
+                   // alert("this is a fav");
+                    
+                    return;
+
+                }
+            
+            
+        });}
+        
+    },[isfaved])
 //----------------------------------------------------------------------------------------------------------------
  const addFav = (event) =>
   {
+       if(favbtnText==="Favorite")
+        {
       event.preventDefault();
       fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+user.Username+'/favs',
       {
@@ -21,6 +49,9 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
       }).then((response) => {
         if (response.ok) {
           alert('Added '+movieData.title+' to your Favorites!');
+         // favButton = Document.getElementById('favbtn');
+          //favButton.innerText = 'Fav Added!'
+          setfavbtnText("added to favorites");
             return response.json();
             
         } else {
@@ -28,13 +59,14 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
         }
     }).catch(error => {
       console.error('Error: ', error);
-  });
+    
+  });}
   }
 //---------------------------------------------------------------------------------------------------------------------
 
 
     return (//this is the main movie view component, which displays all of the movies data/info
-    <Col >
+    <Col id="root">
     { user?
     <div className="cardBack" style={{marginTop:'8vw'}}> 
         <div className="movieDetails" >
@@ -51,8 +83,8 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
             <div>Description: {movieData.description}</div>
         </div>
         <div style={{marginTop:'25vh',marginRight:'5px',marginBottom:'5px',backgroundColor:'rgb(31,30,30)',borderRadius:'5px', float:'right'}}>
-       { user?
-        <Button style = {{margin:'5px',backgroundColor:'#d13028',border:'none'}} onClick={addFav}>Favorite</Button>
+       { user&&!isfaved?
+        <Button id='favbtn' style = {{margin:'5px',backgroundColor:'#d13028',border:'none'}} onClick={addFav}>{favbtnText}</Button>
         :<div></div>
        }
         <Button onClick={onBackClick} style={{backgroundColor:'#d13028',border:'none',marginRight:'5px'}}>Go Back</Button>
@@ -71,11 +103,10 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
             <div>Description: {movieData.description}</div>
         </div>
         
-       { user?
-        <Button className="button" style = {{margin:'5px'}} onClick={addFav}>Favorite</Button>
-        :<div></div>
-       }
+       
         <Button  style={{backgroundColor:'#d13028',border:'none',float:'right',marginTop:'5vw', marginRight:'5px',marginBottom:'5px'}}  onClick={onBackClick} >Go Back</Button>
+
+        
         </div>
     </div>
 }

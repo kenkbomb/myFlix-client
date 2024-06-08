@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import {Button} from "react-bootstrap";
-import { BrowserRouter,Route,Routes,Navigate } from "react-router-dom";//for routing
+import { BrowserRouter,Route,Routes,Navigate, useNavigate } from "react-router-dom";//for routing
 
-export const SignupView = ({gotoLogin}) => {
+export const SignupView = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,11 +31,11 @@ export const SignupView = ({gotoLogin}) => {
     }).then((response) => {
       if (response.ok) {
         alert("Signup successful, please login");
-        window.location.reload();
-       // gotoLogin();
-       // <Navigate to ='/login'/>
+       
+        navigate('/login');//goes to the login page after successfully subscribing...
+       
       } else {
-        alert("Signup failed");
+        alert("Signup failed, please try again, perhaps choose a different username");
       }
     });}
 

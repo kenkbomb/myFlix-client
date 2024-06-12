@@ -2,18 +2,19 @@ import React from "react";
 //import { MovieCard } from "../movieCard/movieCard";
 import { Col,Button } from "react-bootstrap";
 import { useState,useEffect } from "react";
-import Image from "react-bootstrap/Image";
-
+//import Image from "react-bootstrap/Image";
+import { Navigate } from "react-router-dom";
+import { BackButton } from "../backButton";
 export const MovieView = ({movieData,onBackClick,user,token}) =>
 {
    
     const [favbtnText,setfavbtnText] = useState("Favorite");
     const [favMovies,setFavMovies] = useState(user.Favorites);
     const [isfaved,setisfaved] = useState(false);
+    //const nav = Navigate();
 //-------------------------------------------------------------------------------------------------------------
     useEffect(()=>{
     
-            
         if(user!=undefined){
         setFavMovies(user.Favorites);
         
@@ -25,17 +26,13 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
                     setisfaved(true);
                     console.log(isfaved);
                     console.log(element + " " + movieData._id);
-                   // alert("this is a fav");
-                    
                     return;
-
                 }
-            
-            
-        });}
+            });}
         
     },[isfaved])
 //----------------------------------------------------------------------------------------------------------------
+
  const addFav = (event) =>
   {
        if(favbtnText==="Favorite")
@@ -49,8 +46,7 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
       }).then((response) => {
         if (response.ok) {
           alert('Added '+movieData.title+' to your Favorites!');
-         // favButton = Document.getElementById('favbtn');
-          //favButton.innerText = 'Fav Added!'
+         
           setfavbtnText("added to favorites");
             return response.json();
             
@@ -87,6 +83,7 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
         <Button id='favbtn' style = {{margin:'5px',backgroundColor:'#d13028',border:'none'}} onClick={addFav}>{favbtnText}</Button>
         :<div></div>
        }
+       
         <Button onClick={onBackClick} style={{backgroundColor:'#d13028',border:'none',marginRight:'5px'}}>Go Back</Button>
         </div></div></div>
     </div>:

@@ -7,11 +7,13 @@ import { LoginView } from "../LoginView/LoginView";
 import { SignupView } from "../signupView/SignupView";
 import { NavigationBar } from "../navigationBar/navigationBar";
 import { ProfileView } from "../profileView/profileView";
+import { BackButton } from "../backButton";
 import { Col, Container,Button,Form,Row,Form } from "react-bootstrap";
-import { BrowserRouter,Route,Routes,Navigate } from "react-router-dom";//for routing
+import { BrowserRouter,Route,Routes,Navigate,useNavigate,Link,useParams } from "react-router-dom";//for routing
 import '../../index.scss';//remove?
 let matches = [];
 let moviesFromApi = [];
+
 
 
 //---------------------------------------------------------------------------------------------------------------
@@ -24,7 +26,7 @@ export const MainView = () =>
   const [token, setToken] = useState(storedToken?storedToken:null);
   //movie data hooks-----------------------------------------------
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState('');
   //search hooks---------------------------------------------------
   const [search,setSearch] = useState('');
   const [match,setMatch] = useState([]);
@@ -33,8 +35,10 @@ export const MainView = () =>
   const [searchButtonText,setSearchButtonText] = useState('Search by Genre');//the text of the search button...
   const [fav,setFav] = useState(false);
   const [f,s] = useState(0);
-  const [vertPos,setVertPos] = useState(0);
-  //const navigate = useNavigate();
+  const {params} = useParams();
+  const [path,setPath] = useState('');
+  const [mp,setmp] = useState('');
+ // const navigate = useNavigate();
  //----------------------------------------------------------------------------------------------------
   //const [topFavs,setTopFavs] = useState(movies);
   //--------------------------------------------------------------------------------------------------------------
@@ -49,17 +53,16 @@ export const MainView = () =>
     alert('Returning to Login');
     //navigate('login');
   }//------------------------------------------------------------------------------------------------------------
-  function gotoLogin()
-  {
-    alert('Please Login');
-    navigate('login');
-    
-  }
-function onBackClick()
+ 
+const onBackClick=()=>
 {
-  setSelectedMovie(null);
+  console.log("work more");
+  setSelectedMovie(null);//reset this to null if issues
+  //console.log(selectedMovie.title);
   s(f+1);
-  console.log(f);
+  console.log("go");
+  history.go(-1);
+  
   
 }
   
@@ -142,6 +145,7 @@ const deleteUser = () =>
 //------------------------------------------------------------------------------------------------------------
     useEffect(()=>
     {
+      //setPath('/movies');
       if(!token){return;}//if theres no token present yet, exit this function, ei...do not call fetch...
 
       //if there IS a token present fetch is called...
@@ -177,6 +181,7 @@ const deleteUser = () =>
           {
           // console.log('matches found on ' + search+ ' ' + matches.length );
             setMovies(matches);
+            //console.log(path);
           }
         });
 
@@ -204,7 +209,7 @@ return (
 {/*-----------------------------------------------------------------------------------------------*/}
         <Route path="/" element = {
           <>
-             {user?(<Navigate to = '/movies' onClick={()=>{s(f+1)}}/>):<Navigate to = '/login'/>}
+             {user?(<Navigate to = {path} onClick={()=>{s(f+1)}}/>):<Navigate to = '/login'/>}
           </>
         }></Route>
         
@@ -238,9 +243,69 @@ return (
         {!user?(<Navigate to = '/signup'/>):(<ProfileView userData={user} moviesData={moviesFromApi} deleteMe={deleteUser} token={token} setUser={setUser} logout={doLogout} f={f} s={s} />)}
       </>
     }/>
-{/*-------------------------------------------------------------------------------------------*/}
+    
+   
 
-    <Route path = '/movies' element = {
+    <Route path = '/movies' element={
+      <div>
+       {!selectedMovie? (<div style={{backgroundColor:'rgb(31, 30, 30)'}}>
+           
+           <Row>
+             
+             <Col style={{marginTop:'50px',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
+         <Form.Group controlId="search">
+         <Form.Control placeholder="type in: action, comedy, thriller, horror, drama or noir" className="w-50 m-auto"  type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
+         </Form.Group>
+         
+         <Button style={{backgroundColor:'#d13028',border:'none'}} className="button" title="thriller, comedy, action,drama, noir, horror" type = 'submit' onClick={doSearch}>{searchButtonText}</Button>
+           </Col>
+           </Row>
+ 
+             <h3 style={{textAlign:'center',color:'red'}}>MyMOVIES</h3>
+ 
+             <section style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center',margin:'5px'}}>
+               
+           {
+           
+           movies.map((movie) => {
+            
+
+            return (
+              <Link to={`/movies/${encodeURIComponent(movie.title)}`}> 
+            <
+              MovieCard className='card'
+              key = {movie.id} 
+              movieData = {movie}
+              userData={user}
+              onMovieClick = {(newSelectedMovie)=>{setSelectedMovie(newSelectedMovie);
+                console.log(newSelectedMovie.title + ' test here');
+                
+                setmp('/movies/'+newSelectedMovie.title);
+               
+                }}
+            />
+            </Link>
+            );
+            
+          })}
+           {/*end of movies map*/}
+           </section>
+       
+         </div>):null
+    }
+      </div>
+      
+    }/>
+
+
+     <Route path='/movies/:title' element={
+      <>
+      {selectedMovie?(<MovieView movieData = {selectedMovie} onBackClick={onBackClick} user={user} token={token} />):null}
+      </>
+    }/>
+{/*-------------------------------------------------------------------------------------------*/}
+    {/*  /movies       
+    <Route path ='/movies:title' element = {
 
       <>
       {!selectedMovie?(
@@ -251,7 +316,7 @@ return (
             
             <Col style={{marginTop:'50px',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
         <Form.Group controlId="search">
-        <Form.Control className="w-50 m-auto"  type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
+        <Form.Control placeholder="type in: action, comedy, thriller, horror, drama or noir" className="w-50 m-auto"  type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
         </Form.Group>
         
         <Button style={{backgroundColor:'#d13028',border:'none'}} className="button" title="thriller, comedy, action,drama, noir, horror" type = 'submit' onClick={doSearch}>{searchButtonText}</Button>
@@ -259,6 +324,7 @@ return (
           </Row>
 
             <h3 style={{textAlign:'center',color:'red'}}>MyMOVIES</h3>
+
             <section style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center',margin:'5px'}}>
               
           {
@@ -267,24 +333,34 @@ return (
             
 
             return (
-              
+              <Link to={`/movies/${encodeURIComponent(movie.title)}`}> 
             <
               MovieCard className='card'
               key = {movie.id} 
               movieData = {movie}
               userData={user}
-              onMovieClick = {(newSelectedMovie)=>{setSelectedMovie(newSelectedMovie);}} 
+              onMovieClick = {(newSelectedMovie)=>{setSelectedMovie(newSelectedMovie);
+                console.log(newSelectedMovie.title + ' test here');
+                
+                setmp('/movies/'+newSelectedMovie.title);
+               
+                }}
             />
-            
+            </Link>
             );
-          })}{/*end of movies map*/}
+            
+          })}
+          {/*end of movies map*
           </section>
-         
-        </div>): (<MovieView movieData = {selectedMovie} onBackClick = {onBackClick} user={user} token={token}  />)
+      
+        </div>) : (<MovieView movieData = {selectedMovie} onBackClick = {onBackClick} user={user} token={token}  />)
     }
-    
+  
     </>
     }/>
+    */}
+
+    
 
         </Routes>
           </Container>

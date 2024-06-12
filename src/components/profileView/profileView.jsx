@@ -7,16 +7,14 @@ import { MovieView } from "../movieView/movieView";
 import { useNavigate } from "react-router-dom";
 export const ProfileView = ({userData,moviesData,deleteMe,token,logout,f,s}) =>
 {
-   // const [username, setUsername] = useState("");
+   
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
     const [show,toggleShow] = useState(false);
     const [theUserData,setTheUserData] = useState(userData);
     const [favs,setFavs] = useState(moviesData.filter(m => theUserData.Favorites.includes(m._id)));
-    //const [f,s] = useState(0);
     const [selectedMovie,setSelectedMovie] = useState(null);
-    //const [delBn,setDelbn] = useState();//the actual button
     const [lockbn,setLockbtn] = useState('click to unlock the delete user button');
     const lockbtn = useRef();//the switch
     const delBtn = useRef();//the actual button 
@@ -53,9 +51,9 @@ export const ProfileView = ({userData,moviesData,deleteMe,token,logout,f,s}) =>
         if (response.ok) {
           
          alert('fav movie ' + movie.title+ ' removed from '+ userData.Username+"'s favorites!");
-         //console.log(f);
+        
          console.log(response);
-          //console.log('re-render the view, update the fav list');
+          
           s(f+1);//used to update the useEffect...
          return response.json();
         

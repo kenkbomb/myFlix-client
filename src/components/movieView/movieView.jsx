@@ -1,17 +1,14 @@
 import React from "react";
-//import { MovieCard } from "../movieCard/movieCard";
 import { Col,Button } from "react-bootstrap";
 import { useState,useEffect } from "react";
-//import Image from "react-bootstrap/Image";
-import { Navigate } from "react-router-dom";
-import { BackButton } from "../backButton";
+
+
 export const MovieView = ({movieData,onBackClick,user,token}) =>
 {
-   
     const [favbtnText,setfavbtnText] = useState("Favorite");
     const [favMovies,setFavMovies] = useState(user.Favorites);
     const [isfaved,setisfaved] = useState(false);
-    //const nav = Navigate();
+    
 //-------------------------------------------------------------------------------------------------------------
     useEffect(()=>{
     

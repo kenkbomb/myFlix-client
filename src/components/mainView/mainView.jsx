@@ -213,7 +213,7 @@ return (
           </>
         }></Route>
         
-{/*-----------------------------------------------------------------------------------------*/}
+{/*-----------------------------------  The login view  ------------------------------------------------------*/}
         <Route
           path = '/login' element = {
           <>
@@ -222,14 +222,14 @@ return (
           </>
           }
         />
-{/*----------------------------------------------------------------------------------------*/}
+{/*---------------------------------  logout, goes to login view  --------------------------------------------------*/}
         <Route path = '/logout' element = {
        <>
        {!user?(<Navigate to ='/login'/>):(
        <LoginView onLoggedIn={(user, token) => {setUser(user);setToken(token);}} />)}
      </>
      }></Route>
-{/*------------------------------------------------------------------------------------------------*/}
+{/*--------------------------------------  the signup view  --------------------------------------------------------*/}
     <Route path = '/signUp'  element = {
       <>
           {user?(<Navigate to='/'/>):(<SignupView   />)}
@@ -237,7 +237,7 @@ return (
       </>
     }
   />
-{/*------------------------------------------------------------------------------------------*/}
+{/*--------------------------------------   Profile view  ----------------------------------------------------*/}
     <Route style={{border:'2px solid black',marginTop:'10vw'}} path = '/profile' element = {
       <>
         {!user?(<Navigate to = '/signup'/>):(<ProfileView userData={user} moviesData={moviesFromApi} deleteMe={deleteUser} token={token} setUser={setUser} logout={doLogout} f={f} s={s} />)}
@@ -245,14 +245,14 @@ return (
     }/>
     
    
-
+{/*-----------------------main movie list view, for when the user has not selected a movie----------*/}
     <Route path = '/movies' element={
       <div>
        {!selectedMovie? (<div style={{backgroundColor:'rgb(31, 30, 30)'}}>
            
            <Row>
              
-             <Col style={{marginTop:'50px',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
+         <Col style={{marginTop:'50px',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
          <Form.Group controlId="search">
          <Form.Control placeholder="type in: action, comedy, thriller, horror, drama or noir" className="w-50 m-auto"  type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
          </Form.Group>
@@ -268,8 +268,6 @@ return (
            {
            
            movies.map((movie) => {
-            
-
             return (
               <Link to={`/movies/${encodeURIComponent(movie.title)}`}> 
             <
@@ -297,6 +295,7 @@ return (
       
     }/>
 
+{/*-------------------------detailed movie view, when the user has selected a movie-------------------------*/}
 
      <Route path='/movies/:title' element={
       <>
@@ -304,61 +303,7 @@ return (
       </>
     }/>
 {/*-------------------------------------------------------------------------------------------*/}
-    {/*  /movies       
-    <Route path ='/movies:title' element = {
-
-      <>
-      {!selectedMovie?(
-        
-          <div style={{backgroundColor:'rgb(31, 30, 30)'}}>
-           
-          <Row>
-            
-            <Col style={{marginTop:'50px',textAlign:'center',borderRadius:'10px',marginBottom:'10px',}}>
-        <Form.Group controlId="search">
-        <Form.Control placeholder="type in: action, comedy, thriller, horror, drama or noir" className="w-50 m-auto"  type = 'text' value={search} onChange={(e)=>setSearch(e.target.value)} required></Form.Control>
-        </Form.Group>
-        
-        <Button style={{backgroundColor:'#d13028',border:'none'}} className="button" title="thriller, comedy, action,drama, noir, horror" type = 'submit' onClick={doSearch}>{searchButtonText}</Button>
-          </Col>
-          </Row>
-
-            <h3 style={{textAlign:'center',color:'red'}}>MyMOVIES</h3>
-
-            <section style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center',margin:'5px'}}>
-              
-          {
-          
-          movies.map((movie) => {
-            
-
-            return (
-              <Link to={`/movies/${encodeURIComponent(movie.title)}`}> 
-            <
-              MovieCard className='card'
-              key = {movie.id} 
-              movieData = {movie}
-              userData={user}
-              onMovieClick = {(newSelectedMovie)=>{setSelectedMovie(newSelectedMovie);
-                console.log(newSelectedMovie.title + ' test here');
-                
-                setmp('/movies/'+newSelectedMovie.title);
-               
-                }}
-            />
-            </Link>
-            );
-            
-          })}
-          {/*end of movies map*
-          </section>
-      
-        </div>) : (<MovieView movieData = {selectedMovie} onBackClick = {onBackClick} user={user} token={token}  />)
-    }
-  
-    </>
-    }/>
-    */}
+   
 
     
 

@@ -209,7 +209,7 @@ return (
 {/*-----------------------------------------------------------------------------------------------*/}
         <Route path="/" element = {
           <>
-             {user?(<Navigate to = {path} onClick={()=>{s(f+1)}}/>):<Navigate to = '/login'/>}
+             {user?(<Navigate to = '/movies' onClick={()=>{s(f+1)}}/>):<Navigate to = '/login'/>}
           </>
         }></Route>
         

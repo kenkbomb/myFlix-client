@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import {Button} from "react-bootstrap";
-import { BrowserRouter,Route,Routes,Navigate, useNavigate } from "react-router-dom";//for routing
+import { useNavigate } from "react-router-dom";//for routing
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");

@@ -75,7 +75,8 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
             <div>Tagline: {movieData.tagline}</div>
             <div>Description: {movieData.description}</div>
         </div>
-        <div style={{marginTop:'25vh',marginRight:'5px',marginBottom:'5px',backgroundColor:'rgb(31,30,30)',borderRadius:'5px', float:'right'}}>
+        {/*----this is the coal colored background that is around the red buttons----*/}
+        <div className="buttonBorder" >
        { user&&!isfaved?
         <Button id='favbtn' style = {{margin:'5px',backgroundColor:'#d13028',border:'none'}} onClick={addFav}>{favbtnText}</Button>
         :<div></div>
@@ -84,7 +85,7 @@ export const MovieView = ({movieData,onBackClick,user,token}) =>
         <Button onClick={onBackClick} style={{backgroundColor:'#d13028',border:'none',marginRight:'5px'}}>Go Back</Button>
         </div></div></div>
     </div>:
-    <div className="cardBack"> {/*in the profile/favs view...*/}
+    <div className="cardBack"> {/*in the profile/favs view.....................................................*/}
         <div className="movieDetails" >
         <div> <img className="picNoGrow" src = {movieData.imageURL} /></div>
         <div className="movieText">

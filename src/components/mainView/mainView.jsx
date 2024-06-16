@@ -7,14 +7,11 @@ import { LoginView } from "../LoginView/LoginView";
 import { SignupView } from "../signupView/SignupView";
 import { NavigationBar } from "../navigationBar/navigationBar";
 import { ProfileView } from "../profileView/profileView";
-import { BackButton } from "../backButton";
 import { Col, Container,Button,Form,Row,Form } from "react-bootstrap";
 import { BrowserRouter,Route,Routes,Navigate,useNavigate,Link,useParams } from "react-router-dom";//for routing
 import '../../index.scss';//remove?
 let matches = [];
 let moviesFromApi = [];
-
-
 
 //---------------------------------------------------------------------------------------------------------------
 export const MainView = () =>
@@ -38,9 +35,8 @@ export const MainView = () =>
   const {params} = useParams();
   const [path,setPath] = useState('');
   const [mp,setmp] = useState('');
- // const navigate = useNavigate();
  //----------------------------------------------------------------------------------------------------
-  //const [topFavs,setTopFavs] = useState(movies);
+  
   //--------------------------------------------------------------------------------------------------------------
   function doLogout()
   {
@@ -56,26 +52,21 @@ export const MainView = () =>
  
 const onBackClick=()=>
 {
-  console.log("work more");
   setSelectedMovie(null);//reset this to null if issues
-  //console.log(selectedMovie.title);
   s(f+1);
-  console.log("go");
   history.go(-1);
-  
-  
-}
+  }
   
   useEffect(()=>
     {
-      //if(!user){return;}//if there is no user, end this function...
+      if(!user){return;}//if there is no user, end this function...
   
       fetch('https://myflixdb-162c62e51cf6.herokuapp.com/users/'+user.Username,
       {headers:{Authorization: `Bearer ${token}`}})
           .then((response)=>response.json())
           .then((data)=>{
             setUser(data);
-            //setFavs(moviesData.filter(m => data.Favorites.includes(m._id)));
+            
           })},[f]);
   
   //--------------------------------------------------------------------------------------------------------------
@@ -145,7 +136,7 @@ const deleteUser = () =>
 //------------------------------------------------------------------------------------------------------------
     useEffect(()=>
     {
-      //setPath('/movies');
+      
       if(!token){return;}//if theres no token present yet, exit this function, ei...do not call fetch...
 
       //if there IS a token present fetch is called...
@@ -153,7 +144,7 @@ const deleteUser = () =>
         {headers:{Authorization: `Bearer ${token}`}})
         .then((response)=>response.json())
         .then((data)=>{
-         // console.log(data);
+         
           
           moviesFromApi = data.map((movie)=>
           {
@@ -174,14 +165,14 @@ const deleteUser = () =>
             //---------------------------------------------------------------------------------------------------
           if(search==='')
           {
-           // console.log('match length is ' + matches.length);
+           
            setMovies(moviesFromApi);
           }
           if(search!='' && matches.length!=0)//bug here
           {
-          // console.log('matches found on ' + search+ ' ' + matches.length );
+          
             setMovies(matches);
-            //console.log(path);
+            
           }
         });
 

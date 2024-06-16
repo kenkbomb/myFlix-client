@@ -1,13 +1,12 @@
-import {React,Button} from "react";
+import {React} from "react";
 import PropTypes from 'prop-types';
 import { useState,useEffect } from "react";
-import { Button } from 'react-bootstrap';
 import { BsSuitHeartFill } from "react-icons/bs";
 
 
 export const MovieCard = ({movieData,onMovieClick,userData}) =>
 {
-   // const [movie,setMovies] = useState(movieData);
+   
     const [faved,setFaved] = useState(false);
     const [user,setUser] = useState(userData);
     const [picType,setPicType] = useState('pic');
@@ -15,15 +14,15 @@ export const MovieCard = ({movieData,onMovieClick,userData}) =>
   
     function getFavs(movie)
     {
-userData.Favorites.forEach(element => {
-    if(movie._id===element)
+        userData.Favorites.forEach(element => {
+             if(movie._id===element)
         {
-            //alert(movie.title + " is a fav!");
+            
             setFaved(true);
             setPicType("favedPic");
         }
     
-});
+            });
 
       
     }
@@ -31,9 +30,9 @@ userData.Favorites.forEach(element => {
     useEffect(()=>
         {   
             setUser(userData);
-            
             getFavs(movieData);
         },[userData,faved])
+
     return (
     <>
        

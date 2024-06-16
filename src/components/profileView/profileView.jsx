@@ -154,7 +154,7 @@ return (
               delBtn.current.disabled = true;
               
           }
-       // alert('delete button is disabled?'+' '+delBtn.disabled+' '+lockbtn.label);
+       
         }}>
 
         </Form.Check>
@@ -166,7 +166,7 @@ return (
         <ul style={{listStyle:'none', textAlign:'center',color:'whitesmoke'}}><h3>On File...</h3> 
           <li>Username: {userData.Username} </li>
           <li> Email: {userData.Email} </li>
-          <li> Birthdate: {userData.Birthday}</li>
+          <li title="year,day, month"> Birthdate: {userData.Birthday.slice(0,10)}</li>
         </ul>
       </section>
             {/*favs section------------------------------------------------------------------------------   */}

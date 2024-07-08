@@ -5,7 +5,7 @@ with and serves the database, (hosted on Heroku) and a front-end portion, made w
 where they can view selected movies in greater detail and also add them to their list of 'favorites'.  Navigating to their profile view, users can view and edit their user data
 as well as delete their account and view their list of favorited movies, removing any if they choose to do so. Users may also search for movies based on movie genre, which will return
 a list of each movie that matches the genre searched for. The app is a demonstration of the full stack process, back-end and front-end coming together into something that gives 
-value to the users.
+value to end users.
 
 Use NPM RUN BUILD to create a build or visit https://kbomb-flix.netlify.app
 
